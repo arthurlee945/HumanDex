@@ -7,6 +7,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import IntroScreen from "./screens/IntroScreen";
 import DexScreen from "./screens/DexScreen";
 import AboutScreen from "./screens/AboutScreen";
+//Components and Utils
 
 const Stack = createStackNavigator();
 
@@ -15,7 +16,7 @@ export default function App() {
         <>
             <StatusBar style="light" />
             <NavigationContainer>
-                <Stack.Navigator>
+                <Stack.Navigator initialRouteName="DexCover">
                     <Stack.Screen name="DexCover" component={IntroScreen} />
                     <Stack.Screen name="DexMain" component={DexScreen} />
                     <Stack.Screen name="About" component={AboutScreen} />
