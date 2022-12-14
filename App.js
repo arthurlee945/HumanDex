@@ -4,10 +4,10 @@ import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 //Screens
-import IntroScreen from "./screens/IntroScreen";
 import DexScreen from "./screens/DexScreen";
 import AboutScreen from "./screens/AboutScreen";
 //Components and Utils
+import { Color } from "./constants/styles";
 
 const Stack = createStackNavigator();
 
@@ -16,8 +16,15 @@ export default function App() {
         <>
             <StatusBar style="light" />
             <NavigationContainer>
-                <Stack.Navigator initialRouteName="DexCover">
-                    <Stack.Screen name="DexCover" component={IntroScreen} />
+                <Stack.Navigator
+                    initialRouteName="DexMain"
+                    screenOptions={{
+                        headerShown: false,
+                        cardStyle: {
+                            backgroundColor: Color.red100,
+                        },
+                    }}
+                >
                     <Stack.Screen name="DexMain" component={DexScreen} />
                     <Stack.Screen name="About" component={AboutScreen} />
                 </Stack.Navigator>
@@ -29,7 +36,6 @@ export default function App() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#fff",
         alignItems: "center",
         justifyContent: "center",
     },
