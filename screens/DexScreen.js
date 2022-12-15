@@ -1,17 +1,15 @@
 import { StyleSheet, View, Text } from "react-native";
 //Components and Utils
 import ScreenContentView from "../components/ScreenContentView";
-import TopCover from "../components/introCover/TopCover";
-import BottomCover from "../components/introCover/BottomCover";
+import Cover from "../components/introCover/Cover";
 
 function DexScreen() {
     return (
         <View style={styles.screen}>
-            <TopCover visible={true} />
-            <BottomCover visible={true} />
             <ScreenContentView style={styles.contentContainer}>
                 <Text>DexPage</Text>
             </ScreenContentView>
+            <Cover />
         </View>
     );
 }

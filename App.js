@@ -5,6 +5,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 //Screens
 import DexScreen from "./screens/DexScreen";
+import CollectionScreen from "./screens/CollectionScreen";
 import AboutScreen from "./screens/AboutScreen";
 //Components and Utils
 import { Color } from "./constants/styles";
@@ -17,7 +18,7 @@ export default function App() {
             <StatusBar style="light" />
             <NavigationContainer>
                 <Stack.Navigator
-                    initialRouteName="DexMain"
+                    initialRouteName="Dex"
                     screenOptions={{
                         headerShown: false,
                         cardStyle: {
@@ -25,7 +26,11 @@ export default function App() {
                         },
                     }}
                 >
-                    <Stack.Screen name="DexMain" component={DexScreen} />
+                    <Stack.Screen name="Dex" component={DexScreen} />
+                    <Stack.Screen
+                        name="Collection"
+                        component={CollectionScreen}
+                    />
                     <Stack.Screen name="About" component={AboutScreen} />
                 </Stack.Navigator>
             </NavigationContainer>

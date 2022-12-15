@@ -16,7 +16,7 @@ export const Color = {
 };
 
 export const topShade = {
-    elevation: 3,
+    elevation: 5,
     shadowColor: "#000",
     shadowOpacity: 0.2,
     shadowRadius: 2.75,
@@ -27,7 +27,7 @@ export const topShade = {
 };
 
 export const botShade = {
-    elavation: 3,
+    elavation: 5,
     shadowColor: "#000",
     shadowOpacity: 0.2,
     shadowRadius: 2.75,
@@ -35,4 +35,9 @@ export const botShade = {
         width: 0,
         height: 2,
     },
+};
+
+export const outline = {
+    borderWidth: 2,
+    borderColor: Color.black,
 };

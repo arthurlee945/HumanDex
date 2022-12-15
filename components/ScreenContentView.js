@@ -7,11 +7,9 @@ function ScreenContentView({ children, style, onLayout }) {
         <LinearGradient
             colors={[Color.red150, Color.red100, Color.red150]}
             onLayout={onLayout}
-            style={[styles.gradientView, style]}
+            style={styles.gradientView}
         >
-            <SafeAreaView style={styles.AndroidSafeArea}>
-                {children}
-            </SafeAreaView>
+            <SafeAreaView style={[styles.AndroidSafeArea, style]}>{children}</SafeAreaView>
         </LinearGradient>
     );
 }
