@@ -1,16 +1,18 @@
 import { useState } from "react";
-import { Animated, Dimensions, StyleSheet } from "react-native";
+import { Animated, View, Dimensions, StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { Color, outline } from "../../constants/styles";
+import { Color, outline, botShade } from "../../constants/styles";
 //Components
 import CoverButton from "./CoverButton";
 function TopCover({ visible }) {
     const [visibility, setVisibility] = useState(visible);
 
     return (
-        <Animated.View style={[styles.topCover, outline]}>
+        <Animated.View style={[styles.topCover]}>
             <LinearGradient colors={[Color.red150, Color.red100]} style={styles.gradientBg}>
-                <CoverButton />
+                <View style={[styles.buttonContainer, outline, botShade]}>
+                    <CoverButton />
+                </View>
             </LinearGradient>
         </Animated.View>
     );
@@ -35,6 +37,13 @@ const styles = StyleSheet.create({
         backgroundColor: "#0000",
     },
     gradientBg: {
+        flex: 1,
+        borderBottomLeftRadius: 10,
+        borderBottomRightRadius: 10,
+        backgroundColor: "#0000",
+        overflow: "visible",
+    },
+    buttonContainer: {
         flex: 1,
         alignItems: "center",
         borderBottomLeftRadius: 10,

@@ -1,11 +1,45 @@
-import { LinearGradient } from "expo-linear-gradient";
-import { Animated, View, Image, Pressable, Dimensions, StyleSheet } from "react-native";
-import { Color, outline, botShade } from "../../constants/styles";
+import { Animated, View, Pressable, Dimensions, StyleSheet } from "react-native";
+import { Color, outline } from "../../constants/styles";
+import { useRef } from "react";
 function CoverButton({ onPress, pos }) {
+    const shaodowAnime = useRef(new Animated.Value(3)).current;
+    const buttonAnime = useRef(new Animated.Value(0)).current;
+    const handleButtonClick = () => {
+        Animated.timing(buttonAnime, {
+            toValue: 3,
+            duration: 100,
+            useNativeDriver: true,
+        }).start(({ finished }) => {
+            finished &&
+                Animated.timing(buttonAnime, {
+                    toValue: 0,
+                    duration: 100,
+                    useNativeDriver: true,
+                }).start();
+        });
+        // onPress();
+    };
     return (
         <View style={[styles.buttonTopContainer, outline]}>
-            <Pressable onPress={onPress}>
-                <Animated.View style={[styles.mainBtn, outline]}></Animated.View>
+            <Pressable onPress={handleButtonClick}>
+                <Animated.View
+                    style={[
+                        styles.mainBtn,
+                        outline,
+                        {
+                            elevation: shaodowAnime,
+                            shadowOffset: {
+                                width: 0,
+                                height: shaodowAnime,
+                            },
+                            transform: [
+                                {
+                                    translateY: buttonAnime,
+                                },
+                            ],
+                        },
+                    ]}
+                ></Animated.View>
             </Pressable>
         </View>
     );
@@ -28,12 +62,6 @@ const styles = StyleSheet.create({
         aspectRatio: 1 / 1,
         transform: [{ translateY: containerSize / 2 }],
         borderRadius: containerSize / 2,
-    },
-    insetShadow: {
-        backgroundColor: "#0000",
-        width: buttonSize,
-        height: buttonSize,
-        borderRadius: buttonSize / 2,
     },
     mainBtn: {
         width: buttonSize,
