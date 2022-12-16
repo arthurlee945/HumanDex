@@ -1,40 +1,49 @@
 import { Animated, View, Pressable, Dimensions, StyleSheet } from "react-native";
 import { Color, outline } from "../../constants/styles";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 //components
-import RadialGradient from "../RadialGradient";
+import RippleGradient from "../RippleGradient";
 function CoverButton({ onPress, pos }) {
-    const shadowAnime = useRef(new Animated.Value(3)).current;
-    const buttonAnime = useRef(new Animated.Value(0)).current;
+    const buttonAnime = useRef([new Animated.Value(0), new Animated.Value(3)]).current;
+    const [rippleConfig, setRippleConfig] = useState({
+        count: 5,
+        color: Color.yellow100,
+        clicked: false,
+    });
     const handleButtonClick = () => {
         const duration = 75;
+        setRippleConfig((currConfig) => ({
+            ...currConfig,
+            count: 3,
+            color: Color.green50,
+            clicked: true,
+        }));
         Animated.parallel([
-            Animated.timing(buttonAnime, {
+            Animated.timing(buttonAnime[0], {
                 toValue: 1.5,
                 duration: duration,
                 useNativeDriver: true,
-            }).start(({ finished }) => {
-                finished &&
-                    Animated.timing(buttonAnime, {
-                        toValue: 0,
-                        duration: duration,
-                        useNativeDriver: true,
-                    }).start();
             }),
-            Animated.timing(shadowAnime, {
+            Animated.timing(buttonAnime[1], {
                 toValue: 0,
                 duration: duration,
                 useNativeDriver: true,
-            }).start(
-                ({ finished }) =>
-                    finished &&
-                    Animated.timing(shadowAnime, {
+            }),
+        ]).start(({ finished }) => {
+            finished &&
+                Animated.parallel([
+                    Animated.timing(buttonAnime[0], {
+                        toValue: 0,
+                        duration: duration,
+                        useNativeDriver: true,
+                    }),
+                    Animated.timing(buttonAnime[1], {
                         toValue: 3,
                         duration: duration,
                         useNativeDriver: true,
-                    }).start()
-            ),
-        ]).start();
+                    }),
+                ]).start();
+        });
         onPress();
     };
     return (
@@ -45,20 +54,25 @@ function CoverButton({ onPress, pos }) {
                         styles.mainBtn,
                         outline,
                         {
-                            elevation: shadowAnime,
+                            elevation: buttonAnime[1],
                             shadowOffset: {
                                 width: 0,
-                                height: shadowAnime,
+                                height: buttonAnime[1],
                             },
                             transform: [
                                 {
-                                    translateY: buttonAnime,
+                                    translateY: buttonAnime[0],
                                 },
                             ],
                         },
                     ]}
                 >
-                    <RadialGradient rippleCount={5} color={"Yellow"} />
+                    <RippleGradient
+                        style={styles.rippleStyle}
+                        rippleCount={rippleConfig.count}
+                        color={rippleConfig.color}
+                        clicked={rippleConfig.clicked}
+                    />
                 </Animated.View>
             </Pressable>
         </View>
@@ -84,6 +98,8 @@ const styles = StyleSheet.create({
         borderRadius: containerSize / 2,
     },
     mainBtn: {
+        alignItems: "center",
+        justifyContent: "center",
         width: buttonSize,
         height: buttonSize,
         borderRadius: buttonSize / 2,
@@ -92,4 +108,5 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.5,
         shadowRadius: 1.5,
     },
+    rippleStyle: {},
 });
