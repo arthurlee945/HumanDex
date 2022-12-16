@@ -1,6 +1,8 @@
 import { Animated, View, Pressable, Dimensions, StyleSheet } from "react-native";
 import { Color, outline } from "../../constants/styles";
 import { useRef } from "react";
+//components
+import RadialGradient from "../RadialGradient";
 function CoverButton({ onPress, pos }) {
     const shadowAnime = useRef(new Animated.Value(3)).current;
     const buttonAnime = useRef(new Animated.Value(0)).current;
@@ -55,7 +57,9 @@ function CoverButton({ onPress, pos }) {
                             ],
                         },
                     ]}
-                ></Animated.View>
+                >
+                    <RadialGradient rippleCount={5} color={"Yellow"} />
+                </Animated.View>
             </Pressable>
         </View>
     );

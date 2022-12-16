@@ -1,11 +1,23 @@
 import { View, Animated, StyleSheet } from "react-native";
-import { useCallback, useState } from "react";
-function RadialGradient({ rippleCount, color, repeat, style }) {
-    cosnt[(ripples, setRipples)] = useState([]);
+import { useCallback, useState, useRef } from "react";
+function RadialGradient({ rippleCount, color, style }) {
+    const [ripples, setRipples] = useState([]);
+    const rippleRef = useRef([]);
     const addRipples = useCallback(() => {
-        setRipples(new Array(rippleCount).map((_) => <Animated.View />));
-    }, [rippleCount]);
-    return <View style={[style]}></View>;
+        console.log("heelo");
+    }, [color]);
+    useState(() => {
+        setRipples(
+            new Array(rippleCount).map((_, i) => {
+                rippleRef.current[i] = new Animated.Value(1);
+                return <Animated.View />;
+            })
+        );
+        addRipples();
+        console.log(ripples, rippleRef);
+    }, [rippleCount, addRipples]);
+
+    return <View style={[style]}>{ripples}</View>;
 }
 
 export default RadialGradient;
