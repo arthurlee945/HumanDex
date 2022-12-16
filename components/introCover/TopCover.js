@@ -11,7 +11,7 @@ function TopCover({ visible }) {
         <Animated.View style={[styles.topCover]}>
             <LinearGradient colors={[Color.red150, Color.red100]} style={styles.gradientBg}>
                 <View style={[styles.buttonContainer, outline, botShade]}>
-                    <CoverButton />
+                    <CoverButton onPress={() => {}} />
                 </View>
             </LinearGradient>
         </Animated.View>

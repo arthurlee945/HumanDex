@@ -2,22 +2,38 @@ import { Animated, View, Pressable, Dimensions, StyleSheet } from "react-native"
 import { Color, outline } from "../../constants/styles";
 import { useRef } from "react";
 function CoverButton({ onPress, pos }) {
-    const shaodowAnime = useRef(new Animated.Value(3)).current;
+    const shadowAnime = useRef(new Animated.Value(3)).current;
     const buttonAnime = useRef(new Animated.Value(0)).current;
     const handleButtonClick = () => {
-        Animated.timing(buttonAnime, {
-            toValue: 3,
-            duration: 100,
-            useNativeDriver: true,
-        }).start(({ finished }) => {
-            finished &&
-                Animated.timing(buttonAnime, {
-                    toValue: 0,
-                    duration: 100,
-                    useNativeDriver: true,
-                }).start();
-        });
-        // onPress();
+        const duration = 75;
+        Animated.parallel([
+            Animated.timing(buttonAnime, {
+                toValue: 1.5,
+                duration: duration,
+                useNativeDriver: true,
+            }).start(({ finished }) => {
+                finished &&
+                    Animated.timing(buttonAnime, {
+                        toValue: 0,
+                        duration: duration,
+                        useNativeDriver: true,
+                    }).start();
+            }),
+            Animated.timing(shadowAnime, {
+                toValue: 0,
+                duration: duration,
+                useNativeDriver: true,
+            }).start(
+                ({ finished }) =>
+                    finished &&
+                    Animated.timing(shadowAnime, {
+                        toValue: 3,
+                        duration: duration,
+                        useNativeDriver: true,
+                    }).start()
+            ),
+        ]).start();
+        onPress();
     };
     return (
         <View style={[styles.buttonTopContainer, outline]}>
@@ -27,10 +43,10 @@ function CoverButton({ onPress, pos }) {
                         styles.mainBtn,
                         outline,
                         {
-                            elevation: shaodowAnime,
+                            elevation: shadowAnime,
                             shadowOffset: {
                                 width: 0,
-                                height: shaodowAnime,
+                                height: shadowAnime,
                             },
                             transform: [
                                 {
@@ -68,13 +84,8 @@ const styles = StyleSheet.create({
         height: buttonSize,
         borderRadius: buttonSize / 2,
         backgroundColor: Color.white,
-        elevation: 3,
         shadowColor: "#000",
-        shadowOpacity: 0.2,
+        shadowOpacity: 0.5,
         shadowRadius: 1.5,
-        shadowOffset: {
-            width: 0,
-            height: 3,
-        },
     },
 });
