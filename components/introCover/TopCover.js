@@ -4,14 +4,23 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Color, outline, botShade } from "../../constants/styles";
 //Components
 import CoverButton from "./CoverButton";
-function TopCover({ visible }) {
-    const [visibility, setVisibility] = useState(visible);
-
+function TopCover({ pos, onPress }) {
     return (
-        <Animated.View style={[styles.topCover]}>
+        <Animated.View
+            style={[
+                styles.topCover,
+                {
+                    transform: [
+                        {
+                            translateY: pos,
+                        },
+                    ],
+                },
+            ]}
+        >
             <LinearGradient colors={[Color.red150, Color.red100]} style={styles.gradientBg}>
                 <View style={[styles.buttonContainer, outline, botShade]}>
-                    <CoverButton onPress={() => {}} />
+                    <CoverButton onPress={onPress} />
                 </View>
             </LinearGradient>
         </Animated.View>
@@ -29,9 +38,8 @@ const styles = StyleSheet.create({
         position: "absolute",
         top: 0,
         left: 0,
-        height: height * 0.5,
+        height: height * 0.5 + 50,
         width: "100%",
-        transform: [{ translateY: 0 }],
         borderBottomLeftRadius: 10,
         borderBottomRightRadius: 10,
         backgroundColor: "#0000",

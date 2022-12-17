@@ -1,11 +1,10 @@
 import { View, Animated, StyleSheet, Dimensions } from "react-native";
 import { useEffect, useState, useRef } from "react";
-function RippleGradient({ rippleCount, color, style, clicked }) {
+function RippleGradient({ rippleCount, color, style, looped, duration }) {
     const rippleRef = useRef([]);
     const [ripples, setRipples] = useState([]);
     const [animation, setAnimation] = useState(null);
-    const handleRippleAnimation = (clicked) => {
-        const duration = 500;
+    const handleRippleAnimation = (looped) => {
         const staggerAni = Animated.stagger(
             duration * 0.75,
             rippleRef.current.map((rRef) => {
@@ -23,7 +22,7 @@ function RippleGradient({ rippleCount, color, style, clicked }) {
                 ]);
             })
         );
-        if (clicked) {
+        if (looped) {
             staggerAni.start();
             return;
         }
@@ -57,11 +56,11 @@ function RippleGradient({ rippleCount, color, style, clicked }) {
                 );
             })
         );
-        handleRippleAnimation(clicked);
-    }, [rippleCount, color, clicked]);
+        handleRippleAnimation(looped);
+    }, [rippleCount, color, looped]);
 
     return (
-        <View style={[styles.rippleContainer, style, { backgroundColor: !clicked ? color : "transparent" }]}>
+        <View style={[styles.rippleContainer, style, { backgroundColor: !looped ? color : "transparent" }]}>
             {ripples}
         </View>
     );

@@ -2,11 +2,21 @@ import { useState } from "react";
 import { Animated, Dimensions, StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Color, outline, topShade } from "../../constants/styles";
-function BottomCover({ visible }) {
-    const [visibility, setVisibility] = useState(visible);
-
+function BottomCover({ pos }) {
     return (
-        <Animated.View style={[styles.bottomCover, topShade]}>
+        <Animated.View
+            style={[
+                styles.bottomCover,
+                topShade,
+                {
+                    transform: [
+                        {
+                            translateY: pos,
+                        },
+                    ],
+                },
+            ]}
+        >
             <LinearGradient colors={[Color.red100, Color.red150]} style={[styles.gradientBg, outline]}></LinearGradient>
         </Animated.View>
     );
@@ -21,9 +31,8 @@ const styles = StyleSheet.create({
         position: "absolute",
         bottom: 0,
         left: 0,
-        height: height * 0.65,
+        height: height * 0.65 + 50,
         width: "100%",
-        transform: [{ translateY: 0 }],
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
         paddingTop: 3,

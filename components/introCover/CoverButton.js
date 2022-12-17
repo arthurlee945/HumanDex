@@ -8,39 +8,41 @@ function CoverButton({ onPress, pos }) {
     const [rippleConfig, setRippleConfig] = useState({
         count: 5,
         color: Color.yellow100,
-        clicked: false,
+        looped: false,
+        duration: 500,
     });
     const handleButtonClick = () => {
-        const duration = 75;
+        const duration = 75,
+            baseConfig = {
+                duration: duration,
+                useNativeDriver: true,
+            };
         setRippleConfig((currConfig) => ({
             ...currConfig,
-            count: 3,
+            count: 2,
             color: Color.green50,
-            clicked: true,
+            looped: true,
+            duration: 400,
         }));
         Animated.parallel([
             Animated.timing(buttonAnime[0], {
                 toValue: 1.5,
-                duration: duration,
-                useNativeDriver: true,
+                ...baseConfig,
             }),
             Animated.timing(buttonAnime[1], {
                 toValue: 0,
-                duration: duration,
-                useNativeDriver: true,
+                ...baseConfig,
             }),
         ]).start(({ finished }) => {
             finished &&
                 Animated.parallel([
                     Animated.timing(buttonAnime[0], {
                         toValue: 0,
-                        duration: duration,
-                        useNativeDriver: true,
+                        ...baseConfig,
                     }),
                     Animated.timing(buttonAnime[1], {
                         toValue: 3,
-                        duration: duration,
-                        useNativeDriver: true,
+                        ...baseConfig,
                     }),
                 ]).start();
         });
@@ -71,7 +73,8 @@ function CoverButton({ onPress, pos }) {
                         style={styles.rippleStyle}
                         rippleCount={rippleConfig.count}
                         color={rippleConfig.color}
-                        clicked={rippleConfig.clicked}
+                        looped={rippleConfig.looped}
+                        duration={rippleConfig.duration}
                     />
                 </Animated.View>
             </Pressable>
