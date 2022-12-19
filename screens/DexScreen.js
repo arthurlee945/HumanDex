@@ -1,4 +1,5 @@
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Button } from "react-native";
+import { Camera } from "expo-camera";
 //Components and Utils
 import ScreenContentView from "../components/ScreenContentView";
 import Cover from "../components/introCover/Cover";
