@@ -19,7 +19,7 @@ function CoverButton({ onPress, pos }) {
             };
         setRippleConfig((currConfig) => ({
             ...currConfig,
-            count: 2,
+            count: 1,
             color: Color.green50,
             looped: true,
             duration: 400,

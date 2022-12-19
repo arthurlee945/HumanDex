@@ -2,12 +2,14 @@ import { StyleSheet, View, Text } from "react-native";
 //Components and Utils
 import ScreenContentView from "../components/ScreenContentView";
 import Cover from "../components/introCover/Cover";
-
+import DexIndicator from "../components/DexIndicator";
+import CameraView from "../components/CameraView";
 function DexScreen() {
     return (
         <View style={styles.screen}>
             <ScreenContentView style={styles.contentContainer}>
-                <Text>DexPage</Text>
+                <DexIndicator />
+                <CameraView />
             </ScreenContentView>
             <Cover />
         </View>
@@ -23,6 +25,5 @@ const styles = StyleSheet.create({
     },
     contentContainer: {
         alignItems: "center",
-        justifyContent: "center",
     },
 });
