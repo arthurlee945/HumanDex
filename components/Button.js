@@ -1,11 +1,12 @@
-import { View, Text, Pressable, StyleSheet } from "react-native";
-import { Color, botShade } from "../constants/styles";
+import { View, Text, Pressable, StyleSheet, useWindowDimensions } from "react-native";
+import { Color } from "../constants/styles";
 
 function Button({ children, onPress }) {
+    const { fontScale } = useWindowDimensions();
     return (
         <Pressable onPress={onPress} style={({ pressed }) => pressed && styles.pressed}>
             <View style={styles.buttonContainer}>
-                <Text style={styles.text}>{children}</Text>
+                <Text style={[styles.text, { fontSize: fontScale * 16 }]}>{children}</Text>
             </View>
         </Pressable>
     );

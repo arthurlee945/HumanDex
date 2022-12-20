@@ -10,7 +10,7 @@ export const Color = {
     red200: "#89051B",
     yellow50: "#fbee94",
     yellow100: "#F9E34F",
-    yeallow300: "#A28C11",
+    yellow300: "#A28C11",
     blue100: "#28ABFD",
     blue200: "#176A9F",
     green50: "#73e57e",
@@ -30,7 +30,7 @@ export const topShade = {
 };
 
 export const botShade = {
-    elavation: 5,
+    elevation: 5,
     shadowColor: "#000",
     shadowOpacity: 0.2,
     shadowRadius: 2.75,

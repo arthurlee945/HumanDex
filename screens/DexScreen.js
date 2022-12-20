@@ -1,10 +1,9 @@
 import { StyleSheet, View, Button } from "react-native";
-import { Camera } from "expo-camera";
 //Components and Utils
 import ScreenContentView from "../components/ScreenContentView";
 import Cover from "../components/introCover/Cover";
 import DexIndicator from "../components/DexIndicator";
-import CameraView from "../components/CameraView";
+import CameraView from "../components/Camera/CameraView";
 function DexScreen() {
     return (
         <View style={styles.screen}>
@@ -25,6 +24,6 @@ const styles = StyleSheet.create({
         overflow: "hidden",
     },
     contentContainer: {
-        alignItems: "center",
+        flex: 1,
     },
 });

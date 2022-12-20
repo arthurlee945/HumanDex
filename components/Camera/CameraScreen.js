@@ -1,18 +1,21 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, useWindowDimensions } from "react-native";
 import { Camera, CameraType } from "expo-camera";
 import { useState } from "react";
-import { Color } from "../constants/styles";
-import Button from "./Button";
+import { Color } from "../../constants/styles";
+import Button from "../Button";
 function CameraScreen({}) {
+    const { fontScale } = useWindowDimensions();
     const [type, setType] = useState(CameraType.back);
     const [permission, requestPermission] = Camera.useCameraPermissions();
     if (!permission) {
-        return <View style={styles.csContainer}></View>;
+        return <View style={styles.csContainer} />;
     }
     if (!permission.granted) {
         return (
             <View style={styles.csContainer}>
-                <Text style={styles.permissionText}>We need permission for HumanDex</Text>
+                <Text style={[styles.permissionText, { fontSize: 16 * fontScale }]}>
+                    We need permission for HumanDex
+                </Text>
                 <Button onPress={requestPermission}>Grant Permission</Button>
             </View>
         );
@@ -34,6 +37,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         backgroundColor: Color.black,
         borderRadius: 5,
+        overflow: "hidden",
     },
     permissionText: {
         textAlign: "center",

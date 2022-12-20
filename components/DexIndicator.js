@@ -2,7 +2,7 @@ import { View, Dimensions, Image, StyleSheet } from "react-native";
 import { Color, botShade, outline } from "../constants/styles";
 function DexIndicator() {
     return (
-        <View style={[styles.Container, botShade]}>
+        <View style={styles.Container}>
             <View style={[styles.indicatorContainer]}>
                 <View style={styles.mainIndicatorOuter}>
                     <View style={styles.mainIndicatorInner}>
