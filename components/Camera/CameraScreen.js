@@ -1,11 +1,10 @@
 import { View, Text, StyleSheet, useWindowDimensions } from "react-native";
 import { Camera, CameraType } from "expo-camera";
-import { useState } from "react";
 import { Color } from "../../constants/styles";
+import CameraPreview from "./CameraPreview";
 import Button from "../Button";
-function CameraScreen({}) {
+function CameraScreen({ camera, preview, loading }) {
     const { fontScale } = useWindowDimensions();
-    const [type, setType] = useState(CameraType.back);
     const [permission, requestPermission] = Camera.useCameraPermissions();
     if (!permission) {
         return <View style={styles.csContainer} />;
@@ -20,10 +19,20 @@ function CameraScreen({}) {
             </View>
         );
     }
-
+    if (loading) {
+        return (
+            <View style={styles.csContainer}>
+                <Text>Loading</Text>
+            </View>
+        );
+    }
     return (
         <View style={styles.csContainer}>
-            <Camera style={styles.camera} type={type}></Camera>
+            {preview ? (
+                <CameraPreview photo={preview} />
+            ) : (
+                <Camera ref={camera} style={styles.camera} type={CameraType.back} ratio={"1:1"}></Camera>
+            )}
         </View>
     );
 }

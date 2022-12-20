@@ -2,14 +2,56 @@ import { Animated, Pressable, View, Dimensions, StyleSheet } from "react-native"
 import { useRef } from "react";
 import { Color, outline } from "../../constants/styles";
 function CameraButton({ onPress }) {
-    const buttonRef = useRef([new Animated.Value(0)]);
+    const buttonRef = useRef([new Animated.Value(3), new Animated.Value(0)]).current;
     const handlebuttonPress = () => {
-        onPress();
+        const baseConfig = {
+            duration: 75,
+            useNativeDriver: true,
+        };
+        Animated.parallel([
+            Animated.timing(buttonRef[0], {
+                toValue: 0,
+                ...baseConfig,
+            }),
+            Animated.timing(buttonRef[1], {
+                toValue: 3,
+                ...baseConfig,
+            }),
+        ]).start(({ finished }) => {
+            onPress();
+            finished &&
+                Animated.parallel([
+                    Animated.timing(buttonRef[0], {
+                        toValue: 3,
+                        ...baseConfig,
+                    }),
+                    Animated.timing(buttonRef[1], {
+                        toValue: 0,
+                        ...baseConfig,
+                    }),
+                ]).start();
+        });
     };
     return (
         <View style={styles.buttonContainer}>
             <Pressable onPress={handlebuttonPress} style={styles.pressableArea}>
-                <Animated.View style={[styles.button, outline]}></Animated.View>
+                <Animated.View
+                    style={[
+                        styles.button,
+                        {
+                            elevation: buttonRef[0],
+                            shadowOffset: {
+                                width: 0,
+                                height: buttonRef[0],
+                            },
+                            transform: [
+                                {
+                                    translateY: buttonRef[1],
+                                },
+                            ],
+                        },
+                    ]}
+                ></Animated.View>
             </Pressable>
         </View>
     );
@@ -32,5 +74,9 @@ const styles = StyleSheet.create({
         height: "100%",
         borderRadius: width / 2,
         backgroundColor: Color.black,
+        shadowColor: "#000",
+        shadowOpacity: 0.2,
+        shadowRadius: 2.75,
+        borderWidth: 2,
     },
 });

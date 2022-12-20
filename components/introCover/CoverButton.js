@@ -26,7 +26,7 @@ function CoverButton({ onPress, pos }) {
         }));
         Animated.parallel([
             Animated.timing(buttonAnime[0], {
-                toValue: 1.5,
+                toValue: 3,
                 ...baseConfig,
             }),
             Animated.timing(buttonAnime[1], {

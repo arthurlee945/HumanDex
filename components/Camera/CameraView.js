@@ -1,10 +1,19 @@
 import { View, Dimensions, Image, StyleSheet } from "react-native";
 import CameraScreen from "./CameraScreen";
 import { Color, outline, botShade } from "../../constants/styles";
+import { useRef, useState } from "react";
 //components
 import InfoDisplayPanel from "./InfoDisplayPanel";
 import CameraButton from "./CameraButton";
 function CameraView() {
+    const camera = useRef();
+    const [preview, setPreview] = useState();
+    const [loading, setLoading] = useState(false);
+    const handleTakePicture = async () => {
+        if (!camera.current) return;
+        const photo = await camera.current.takePictureAsync();
+        setPreview(photo.uri);
+    };
     return (
         <View style={styles.contentContainer}>
             <View style={styles.cameraContainer}>
@@ -25,7 +34,7 @@ function CameraView() {
                             />
                         </View>
                     </View>
-                    <CameraScreen />
+                    <CameraScreen camera={camera} preview={preview} loading={loading} />
                     <View style={styles.botIndicatorCont}>
                         <View style={styles.redBot}>
                             <Image
@@ -54,7 +63,7 @@ function CameraView() {
                         Placeholder Placeholder Placeholder Placeholder Placeholder Placeholder Placeholder Placeholder
                         Placeholder Placeholder Placeholder Placeholder Placeholder
                     </InfoDisplayPanel>
-                    <CameraButton onPress={() => {}} />
+                    <CameraButton onPress={handleTakePicture} />
                 </View>
             </View>
         </View>
@@ -131,7 +140,7 @@ const styles = StyleSheet.create({
     controlIndicator: {
         flexDirection: "row",
         justifyContent: "center",
-        paddingVertical: 15,
+        paddingTop: 20,
     },
     CI: {
         width: "14%",
