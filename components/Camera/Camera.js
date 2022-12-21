@@ -1,9 +1,10 @@
 import { View, Dimensions, Image, StyleSheet } from "react-native";
-import CameraScreen from "./CameraScreen";
 import { Color, outline, botShade } from "../../constants/styles";
 import { useRef, useState } from "react";
+import Constants from "expo-constants";
 //components
 import InfoDisplayPanel from "./InfoDisplayPanel";
+import CameraScreen from "./CameraScreen";
 import CameraButton from "./CameraButton";
 import DexIndicator from "../DexIndicator";
 function Camera() {
