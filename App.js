@@ -1,8 +1,11 @@
 import "react-native-gesture-handler";
+import { useCallback, useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import * as SplashScreen from "expo-splash-screen";
+import { init } from "./utils/database";
 //Screens
 import DexScreen from "./screens/DexScreen";
 import CollectionScreen from "./screens/CollectionScreen";
@@ -10,13 +13,33 @@ import AboutScreen from "./screens/AboutScreen";
 //Components and Utils
 import { Color } from "./constants/styles";
 
+SplashScreen.preventAutoHideAsync();
 const Stack = createStackNavigator();
 
 export default function App() {
+    const [initLoading, setInitLoading] = useState(true);
+
+    useEffect(() => {
+        (async () => {
+            try {
+                await init();
+                setInitLoading(false);
+            } catch (err) {
+                console.log(err);
+            }
+        })();
+    }, []);
+    const onLayoutRoot = useCallback(async () => {
+        if (!initLoading) {
+            await SplashScreen.hideAsync();
+        }
+    }, [initLoading]);
+
+    if (initLoading) return null;
     return (
         <>
             <StatusBar style="light" />
-            <NavigationContainer>
+            <NavigationContainer onReady={onLayoutRoot}>
                 <Stack.Navigator
                     initialRouteName="Dex"
                     screenOptions={{
@@ -27,10 +50,7 @@ export default function App() {
                     }}
                 >
                     <Stack.Screen name="Dex" component={DexScreen} />
-                    <Stack.Screen
-                        name="Collection"
-                        component={CollectionScreen}
-                    />
+                    <Stack.Screen name="Collection" component={CollectionScreen} />
                     <Stack.Screen name="About" component={AboutScreen} />
                 </Stack.Navigator>
             </NavigationContainer>

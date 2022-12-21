@@ -3,13 +3,12 @@ import { StyleSheet, View, Button } from "react-native";
 import ScreenContentView from "../components/ScreenContentView";
 import Cover from "../components/introCover/Cover";
 import DexIndicator from "../components/DexIndicator";
-import CameraView from "../components/Camera/CameraView";
+import Camera from "../components/Camera/Camera";
 function DexScreen() {
     return (
         <View style={styles.screen}>
             <ScreenContentView style={styles.contentContainer}>
-                <DexIndicator />
-                <CameraView />
+                <Camera />
             </ScreenContentView>
             <Cover />
         </View>

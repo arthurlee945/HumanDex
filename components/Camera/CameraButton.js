@@ -1,6 +1,6 @@
-import { Animated, Pressable, View, Dimensions, StyleSheet } from "react-native";
+import { Animated, Pressable, View, Image, Dimensions, StyleSheet } from "react-native";
 import { useRef } from "react";
-import { Color, outline } from "../../constants/styles";
+import { Color } from "../../constants/styles";
 function CameraButton({ onPress }) {
     const buttonRef = useRef([new Animated.Value(3), new Animated.Value(0)]).current;
     const handlebuttonPress = () => {
@@ -51,7 +51,9 @@ function CameraButton({ onPress }) {
                             ],
                         },
                     ]}
-                ></Animated.View>
+                >
+                    <Image style={styles.buttonImage} blurRadius={4} source={require("../../assets/dexControl.png")} />
+                </Animated.View>
             </Pressable>
         </View>
     );
@@ -78,5 +80,10 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.2,
         shadowRadius: 2.75,
         borderWidth: 2,
+    },
+    buttonImage: {
+        width: "100%",
+        height: "100%",
+        opacity: 0.5,
     },
 });
