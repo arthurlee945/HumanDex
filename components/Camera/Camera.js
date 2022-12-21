@@ -9,11 +9,17 @@ import DexIndicator from "../DexIndicator";
 function Camera() {
     const camera = useRef();
     const [preview, setPreview] = useState();
-    const [loading, setLoading] = useState(false);
     const handleTakePicture = async () => {
         if (!camera.current) return;
-        const photo = await camera.current.takePictureAsync();
-        setPreview(photo.uri);
+        if (!preview) {
+            camera.current.pausePreview();
+            const photo = await camera.current.takePictureAsync();
+            setPreview(photo.uri);
+            //need to convert to dataurl
+        } else {
+            camera.current.resumePreview();
+            setPreview(undefined);
+        }
     };
     return (
         <>
@@ -37,7 +43,7 @@ function Camera() {
                                 />
                             </View>
                         </View>
-                        <CameraScreen camera={camera} preview={preview} loading={loading} />
+                        <CameraScreen camera={camera} preview={preview} />
                         <View style={styles.botIndicatorCont}>
                             <View style={styles.redBot}>
                                 <Image
