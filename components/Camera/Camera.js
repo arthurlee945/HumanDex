@@ -1,7 +1,7 @@
 import { View, Dimensions, Image, StyleSheet } from "react-native";
 import { Color, outline, botShade } from "../../constants/styles";
 import { useRef, useState } from "react";
-import Constants from "expo-constants";
+import { addHuman } from "../../utils/database";
 //components
 import InfoDisplayPanel from "./InfoDisplayPanel";
 import CameraScreen from "./CameraScreen";
@@ -10,13 +10,15 @@ import DexIndicator from "../DexIndicator";
 function Camera() {
     const camera = useRef();
     const [preview, setPreview] = useState();
+    const [description, setDescription] = useState("");
     const handleTakePicture = async () => {
         if (!camera.current) return;
         if (!preview) {
+            const photo = await camera.current.takePictureAsync({ quality: 0.5, base64: true });
             camera.current.pausePreview();
-            const photo = await camera.current.takePictureAsync();
             setPreview(photo.uri);
-            //need to convert to dataurl
+            // might need npx expo install expo-image-manipulator to shrink the image before passing to api
+            const dataUrl = `data:image/jpg;base64,${photo.base64}`;
         } else {
             camera.current.resumePreview();
             setPreview(undefined);
@@ -68,11 +70,7 @@ function Camera() {
                         <View style={[styles.CI, { backgroundColor: Color.blue100 }]}></View>
                     </View>
                     <View style={styles.mainControl}>
-                        <InfoDisplayPanel>
-                            Placeholder Placeholder Placeholder Placeholder Placeholder Placeholder Placeholder
-                            Placeholder Placeholder Placeholder Placeholder Placeholder Placeholder Placeholder
-                            Placeholder Placeholder Placeholder Placeholder Placeholder Placeholder Placeholder
-                        </InfoDisplayPanel>
+                        <InfoDisplayPanel>{description}</InfoDisplayPanel>
                         <CameraButton onPress={handleTakePicture} />
                     </View>
                 </View>

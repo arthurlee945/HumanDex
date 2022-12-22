@@ -6,6 +6,7 @@ import Button from "../Button";
 function CameraScreen({ camera, preview }) {
     const { fontScale } = useWindowDimensions();
     const [permission, requestPermission] = Camera.useCameraPermissions();
+
     if (!permission) {
         return <View style={styles.csContainer} />;
     }
@@ -19,9 +20,10 @@ function CameraScreen({ camera, preview }) {
             </View>
         );
     }
+
     return (
         <View style={styles.csContainer}>
-            <Camera ref={camera} style={styles.camera} type={CameraType.back} ratio={"1:1"}></Camera>
+            <Camera ref={camera} style={styles.camera} type={CameraType.back} ratio="1:1"></Camera>
             {preview && <CameraPreview photo={preview} />}
         </View>
     );

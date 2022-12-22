@@ -1,3 +1,4 @@
+import Constants from "expo-constants";
 /*
 {
     "model": "text-davinci-003",
