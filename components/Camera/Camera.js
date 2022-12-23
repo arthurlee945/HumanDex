@@ -2,6 +2,7 @@ import { View, Dimensions, Image, StyleSheet } from "react-native";
 import { Color, outline, botShade } from "../../constants/styles";
 import { useRef, useState } from "react";
 import { addHuman } from "../../utils/database";
+import { getDescription, processImage } from "../../utils/processing";
 //components
 import InfoDisplayPanel from "./InfoDisplayPanel";
 import CameraScreen from "./CameraScreen";
@@ -9,19 +10,47 @@ import CameraButton from "./CameraButton";
 import DexIndicator from "../DexIndicator";
 function Camera() {
     const camera = useRef();
-    const [preview, setPreview] = useState();
-    const [description, setDescription] = useState("");
+    const [loading, setLoading] = useState();
+    const [result, setResult] = useState({
+        description: "",
+        preview: undefined,
+    });
     const handleTakePicture = async () => {
-        if (!camera.current) return;
-        if (!preview) {
+        if (!camera.current || loading) return;
+        if (!result.preview) {
+            setLoading(true);
             const photo = await camera.current.takePictureAsync({ quality: 0.5, base64: true });
             camera.current.pausePreview();
-            setPreview(photo.uri);
             // might need npx expo install expo-image-manipulator to shrink the image before passing to api
             const dataUrl = `data:image/jpg;base64,${photo.base64}`;
+            try {
+                // const processedImage = await processImage(dataUrl);
+                // const { age, dominant_race, dominant_emotion, gender } = processedImage.data.instance_1;
+
+                // const descriptionRes = await getDescription(age, dominant_race, gender, dominant_emotion);
+                // const description = descriptionRes.data.choices[0].text;
+                setResult((currResult) => {
+                    return {
+                        ...currResult,
+                        description:
+                            "This 26 year old, Asian female is so happy she could burst into a spontaneous dance at any given moment! She radiates positivity and joy, always looking for the next opportunity to squeeze in a good laugh.",
+                        preview: photo.uri,
+                    };
+                });
+            } catch (err) {
+                camera.current.resumePreview();
+                console.log(err);
+            }
+            setLoading(false);
         } else {
             camera.current.resumePreview();
-            setPreview(undefined);
+            setResult((currResult) => {
+                return {
+                    ...currResult,
+                    description: "",
+                    preview: undefined,
+                };
+            });
         }
     };
     return (
@@ -46,7 +75,7 @@ function Camera() {
                                 />
                             </View>
                         </View>
-                        <CameraScreen camera={camera} preview={preview} />
+                        <CameraScreen camera={camera} preview={result.preview} />
                         <View style={styles.botIndicatorCont}>
                             <View style={styles.redBot}>
                                 <Image
@@ -70,7 +99,7 @@ function Camera() {
                         <View style={[styles.CI, { backgroundColor: Color.blue100 }]}></View>
                     </View>
                     <View style={styles.mainControl}>
-                        <InfoDisplayPanel>{description}</InfoDisplayPanel>
+                        <InfoDisplayPanel>{result.description}</InfoDisplayPanel>
                         <CameraButton onPress={handleTakePicture} />
                     </View>
                 </View>

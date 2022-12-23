@@ -25,7 +25,9 @@
             }
         },
         "extra": {
-            "apiUrl": "Test"
+            "DF_API_URL": "http://arthurlee945.pythonanywhere.com",
+            "OPENAI_URL": "https://api.openai.com/v1/completions",
+            "OPENAI_API_KEY": "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"
         }
     }
 }
