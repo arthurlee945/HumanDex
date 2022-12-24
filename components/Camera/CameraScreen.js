@@ -3,7 +3,8 @@ import { Camera, CameraType } from "expo-camera";
 import { Color } from "../../constants/styles";
 import CameraPreview from "./CameraPreview";
 import Button from "../Button";
-function CameraScreen({ camera, preview }) {
+import LoadingIndicator from "../LoadingIndicator";
+function CameraScreen({ camera, preview, loading }) {
     const { fontScale } = useWindowDimensions();
     const [permission, requestPermission] = Camera.useCameraPermissions();
 
@@ -25,6 +26,7 @@ function CameraScreen({ camera, preview }) {
         <View style={styles.csContainer}>
             <Camera ref={camera} style={styles.camera} type={CameraType.back} ratio="1:1"></Camera>
             {preview && <CameraPreview photo={preview} />}
+            {loading && <LoadingIndicator />}
         </View>
     );
 }

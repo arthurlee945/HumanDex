@@ -22,10 +22,7 @@ function RippleGradient({ rippleCount, color, style, looped, duration }) {
                 ]);
             })
         );
-        if (looped) {
-            staggerAni.start();
-            return;
-        }
+        if (!looped) return staggerAni.start();
         const animationLoop = Animated.loop(staggerAni);
         setAnimation(animationLoop);
         animationLoop.start();
@@ -60,7 +57,7 @@ function RippleGradient({ rippleCount, color, style, looped, duration }) {
     }, [rippleCount, color, looped]);
 
     return (
-        <View style={[styles.rippleContainer, style, { backgroundColor: !looped ? color : "transparent" }]}>
+        <View style={[styles.rippleContainer, style, { backgroundColor: looped ? color : "transparent" }]}>
             {ripples}
         </View>
     );
@@ -71,6 +68,9 @@ export default RippleGradient;
 const width = Dimensions.get("window").width;
 const styles = StyleSheet.create({
     rippleContainer: {
+        position: "absolute",
+        top: 0,
+        left: 0,
         flex: 1,
         width: "100%",
         height: "100%",

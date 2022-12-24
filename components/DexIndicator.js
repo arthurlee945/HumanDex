@@ -1,12 +1,18 @@
 import { View, Dimensions, Image, StyleSheet } from "react-native";
-import { Color, botShade, outline } from "../constants/styles";
-function DexIndicator() {
+import { Color, outline } from "../constants/styles";
+//components
+import RippleGradient from "./RippleGradient";
+import LibraryButton from "./Camera/LibraryButton";
+function DexIndicator({ speechStarted }) {
     return (
         <View style={styles.Container}>
             <View style={[styles.indicatorContainer]}>
                 <View style={styles.mainIndicatorOuter}>
                     <View style={styles.mainIndicatorInner}>
                         <Image blurRadius={15} style={styles.shadeImage} source={require("../assets/shade.png")} />
+                        {speechStarted && (
+                            <RippleGradient rippleCount={1} color={Color.blue150} looped={true} duration={750} />
+                        )}
                     </View>
                 </View>
                 <View style={styles.red}>
@@ -19,6 +25,7 @@ function DexIndicator() {
                     <Image blurRadius={15} style={styles.shadeImage} source={require("../assets/shade.png")} />
                 </View>
             </View>
+            <LibraryButton />
         </View>
     );
 }
@@ -52,6 +59,7 @@ const styles = StyleSheet.create({
     Container: {
         flexDirection: "row",
         justifyContent: "space-between",
+        alignItems: "center",
         paddingHorizontal: 20,
         paddingTop: 10,
         paddingBottom: 15,

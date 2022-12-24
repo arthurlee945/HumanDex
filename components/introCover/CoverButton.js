@@ -3,12 +3,12 @@ import { Color, outline } from "../../constants/styles";
 import { useRef, useState } from "react";
 //components
 import RippleGradient from "../RippleGradient";
-function CoverButton({ onPress, pos }) {
+function CoverButton({ onPress }) {
     const buttonAnime = useRef([new Animated.Value(0), new Animated.Value(3)]).current;
     const [rippleConfig, setRippleConfig] = useState({
         count: 5,
         color: Color.yellow100,
-        looped: false,
+        looped: true,
         duration: 500,
     });
     const handleButtonClick = () => {
@@ -21,7 +21,7 @@ function CoverButton({ onPress, pos }) {
             ...currConfig,
             count: 1,
             color: Color.green50,
-            looped: true,
+            looped: false,
             duration: 400,
         }));
         Animated.parallel([
@@ -70,7 +70,6 @@ function CoverButton({ onPress, pos }) {
                     ]}
                 >
                     <RippleGradient
-                        style={styles.rippleStyle}
                         rippleCount={rippleConfig.count}
                         color={rippleConfig.color}
                         looped={rippleConfig.looped}
@@ -111,5 +110,4 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.5,
         shadowRadius: 1.5,
     },
-    rippleStyle: {},
 });

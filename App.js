@@ -10,6 +10,7 @@ import { init } from "./utils/database";
 import DexScreen from "./screens/DexScreen";
 import CollectionScreen from "./screens/CollectionScreen";
 import AboutScreen from "./screens/AboutScreen";
+import HumanDetailScreen from "./screens/HumanDetailScreen";
 //Components and Utils
 import { Color } from "./constants/styles";
 
@@ -51,6 +52,7 @@ export default function App() {
                 >
                     <Stack.Screen name="Dex" component={DexScreen} />
                     <Stack.Screen name="Collection" component={CollectionScreen} />
+                    <Stack.Screen name="HumanDetail" component={HumanDetailScreen} />
                     <Stack.Screen name="About" component={AboutScreen} />
                 </Stack.Navigator>
             </NavigationContainer>

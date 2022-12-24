@@ -1,12 +1,10 @@
 import React from "react";
-import { View, Text, ImageBackground, StyleSheet } from "react-native";
+import { View, Image, StyleSheet } from "react-native";
 
 function CameraPreview({ photo }) {
     return (
         <View style={styles.imageContainer}>
-            <ImageBackground style={styles.image} source={{ uri: photo }} resizeMode="cover">
-                <Text style={styles.text}>This is preview screen</Text>
-            </ImageBackground>
+            <Image style={styles.image} source={{ uri: photo }} resizeMode="cover" />
         </View>
     );
 }
@@ -21,13 +19,11 @@ const styles = StyleSheet.create({
         flex: 1,
         width: "100%",
         height: "100%",
-        borderWidth: 2,
     },
     image: {
         width: "100%",
         height: "100%",
-    },
-    text: {
-        color: "white",
+        alignItems: "center",
+        justifyContent: "center",
     },
 });

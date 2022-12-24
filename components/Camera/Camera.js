@@ -1,42 +1,42 @@
-import { View, Dimensions, Image, StyleSheet } from "react-native";
-import { Color, outline, botShade } from "../../constants/styles";
+import { View, Image, StyleSheet } from "react-native";
 import { useRef, useState } from "react";
+import * as Speech from "expo-speech";
 import { addHuman } from "../../utils/database";
-import { getDescription, processImage } from "../../utils/processing";
+import { getDescription, processImage, resizeImage } from "../../utils/processing";
+import { Color, outline, botShade } from "../../constants/styles";
 //components
 import InfoDisplayPanel from "./InfoDisplayPanel";
 import CameraScreen from "./CameraScreen";
 import CameraButton from "./CameraButton";
 import DexIndicator from "../DexIndicator";
+
 function Camera() {
+    // states and ref
     const camera = useRef();
     const [loading, setLoading] = useState();
-    const [result, setResult] = useState({
-        description: "",
-        preview: undefined,
-    });
+    const [preview, setPreview] = useState();
+    const [description, setDescription] = useState("");
+    const [twIntervalActive, setTwIntervalActive] = useState();
+    const [speechStarted, setSpeechStarted] = useState(false);
+    // functions
     const handleTakePicture = async () => {
         if (!camera.current || loading) return;
-        if (!result.preview) {
+        if (!preview) {
             setLoading(true);
-            const photo = await camera.current.takePictureAsync({ quality: 0.5, base64: true });
+            const photo = await camera.current.takePictureAsync();
             camera.current.pausePreview();
-            // might need npx expo install expo-image-manipulator to shrink the image before passing to api
-            const dataUrl = `data:image/jpg;base64,${photo.base64}`;
+            const resizedImage = await resizeImage(photo.uri);
+            const dataUrl = `data:image/jpg;base64,${resizedImage.base64}`;
+            setPreview(resizedImage.uri);
             try {
                 // const processedImage = await processImage(dataUrl);
                 // const { age, dominant_race, dominant_emotion, gender } = processedImage.data.instance_1;
 
                 // const descriptionRes = await getDescription(age, dominant_race, gender, dominant_emotion);
                 // const description = descriptionRes.data.choices[0].text;
-                setResult((currResult) => {
-                    return {
-                        ...currResult,
-                        description:
-                            "This 26 year old, Asian female is so happy she could burst into a spontaneous dance at any given moment! She radiates positivity and joy, always looking for the next opportunity to squeeze in a good laugh.",
-                        preview: photo.uri,
-                    };
-                });
+                const description =
+                    "This 26 year old, Asian female is so happy she could burst into a spontaneous dance at any given moment! She radiates positivity and joy, always looking for the next opportunity to squeeze in a good laugh.";
+                descriptionEffectHandler(description);
             } catch (err) {
                 camera.current.resumePreview();
                 console.log(err);
@@ -44,18 +44,43 @@ function Camera() {
             setLoading(false);
         } else {
             camera.current.resumePreview();
-            setResult((currResult) => {
-                return {
-                    ...currResult,
-                    description: "",
-                    preview: undefined,
-                };
-            });
+            if (twIntervalActive) clearInterval(twIntervalActive);
+            Speech.stop();
+            setTwIntervalActive(undefined);
+            setPreview(undefined);
+            setDescription("");
         }
     };
+
+    const descriptionEffectHandler = (description) => {
+        //speech init
+        const speechOptions = {
+            pitch: 0.3,
+            onStart: () => {
+                setSpeechStarted(true);
+            },
+            onStopped: () => {
+                setSpeechStarted(false);
+            },
+            onDone: () => {
+                setSpeechStarted(false);
+            },
+        };
+        Speech.speak(description, speechOptions);
+        // typewriter effect
+        const fullLength = description.length;
+        let length = description.length;
+        const twInterval = setInterval(() => {
+            if (length === 0) return clearInterval(twInterval);
+            setDescription((curr) => curr + description[fullLength - length]);
+            length -= 1;
+        }, 50);
+        setTwIntervalActive(twInterval);
+    };
+
     return (
         <>
-            <DexIndicator />
+            <DexIndicator speechStarted={speechStarted} />
             <View style={styles.contentContainer}>
                 <View style={styles.cameraContainer}>
                     <View style={[styles.cameraBox, outline]}>
@@ -75,7 +100,7 @@ function Camera() {
                                 />
                             </View>
                         </View>
-                        <CameraScreen camera={camera} preview={result.preview} />
+                        <CameraScreen camera={camera} preview={preview} loading={loading} />
                         <View style={styles.botIndicatorCont}>
                             <View style={styles.redBot}>
                                 <Image
@@ -99,7 +124,7 @@ function Camera() {
                         <View style={[styles.CI, { backgroundColor: Color.blue100 }]}></View>
                     </View>
                     <View style={styles.mainControl}>
-                        <InfoDisplayPanel>{result.description}</InfoDisplayPanel>
+                        <InfoDisplayPanel>{description}</InfoDisplayPanel>
                         <CameraButton onPress={handleTakePicture} />
                     </View>
                 </View>
@@ -109,7 +134,6 @@ function Camera() {
 }
 
 export default Camera;
-const { width } = Dimensions.get("window");
 const styles = StyleSheet.create({
     contentContainer: {
         flex: 1,

@@ -1,8 +1,12 @@
-import Constants from "expo-constants";
 import axios from "axios";
-const { DF_API_URL, OPENAI_URL, OPENAI_API_KEY } = Constants.expoConfig.extra;
+import Constants from "expo-constants";
+import { manipulateAsync } from "expo-image-manipulator";
+import { deleteAsync } from "expo-file-system";
 
+const { DF_API_URL, OPENAI_URL, OPENAI_API_KEY } = Constants.expoConfig.extra;
+console.log(DF_API_URL, OPENAI_URL, OPENAI_API_KEY);
 export const getDescription = (age, race, gender, emotion) => {
+    console.log("Open AI Generating Prompt");
     const propmt = `Write a funny and goofy two to three sentences description of a person who is ${age} years old, ${race}, ${gender}, and currently ${emotion}.`;
     const header = {
         Authorization: `Bearer ${OPENAI_API_KEY}`,
@@ -22,33 +26,29 @@ export const getDescription = (age, race, gender, emotion) => {
 };
 
 export const processImage = (dataUrl) => {
+    console.log("Start processing Image");
     const data = {
         img: [dataUrl],
     };
     return axios.post(`${DF_API_URL}/analyze`, data);
 };
 
-export const resizeImage = () => {};
-// import { Audio } from 'expo-av';
-
-// async function processAudioFile(filePath) {
-//   const soundObject = new Audio.Sound();
-
-//   try {
-//     await soundObject.loadAsync({
-//       uri: filePath,
-//     });
-
-//     const duration = soundObject.getDurationMillis();
-//     const interval = 100; // interval in milliseconds
-
-//     // Start the sound and begin processing at intervals
-//     await soundObject.playAsync();
-//     setInterval(async () => {
-//       const decibelLevel = await soundObject.getDecibelLevelAsync();
-//       console.log(`Decibel level: ${decibelLevel}`);
-//     }, interval);
-//   } catch (error) {
-//     console.error(error);
-//   }
-// }
+export const resizeImage = async (imageUri) => {
+    const actions = [
+        {
+            resize: {
+                width: 750,
+            },
+        },
+    ];
+    const options = {
+        base64: true,
+    };
+    const processedImage = await manipulateAsync(imageUri, actions, options);
+    try {
+        await deleteAsync(imageUri);
+    } catch (err) {
+        console.log(err);
+    }
+    return processedImage;
+};
