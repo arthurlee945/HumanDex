@@ -2,7 +2,6 @@ import { StyleSheet, View, Button } from "react-native";
 //Components and Utils
 import ScreenContentView from "../components/ScreenContentView";
 import Cover from "../components/introCover/Cover";
-import DexIndicator from "../components/DexIndicator";
 import Camera from "../components/Camera/Camera";
 function DexScreen() {
     return (

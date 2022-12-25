@@ -4,7 +4,7 @@ import { manipulateAsync } from "expo-image-manipulator";
 import { deleteAsync } from "expo-file-system";
 
 const { DF_API_URL, OPENAI_URL, OPENAI_API_KEY } = Constants.expoConfig.extra;
-console.log(DF_API_URL, OPENAI_URL, OPENAI_API_KEY);
+
 export const getDescription = (age, race, gender, emotion) => {
     console.log("Open AI Generating Prompt");
     const propmt = `Write a funny and goofy two to three sentences description of a person who is ${age} years old, ${race}, ${gender}, and currently ${emotion}.`;

@@ -1,8 +1,9 @@
 import { View, Image, StyleSheet } from "react-native";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as Speech from "expo-speech";
+import { useIsFocused } from "@react-navigation/native";
 import { addHuman } from "../../utils/database";
-import { getDescription, processImage, resizeImage } from "../../utils/processing";
+import { getDescription, useCallback, processImage, resizeImage } from "../../utils/processing";
 import { Color, outline, botShade } from "../../constants/styles";
 //components
 import InfoDisplayPanel from "./InfoDisplayPanel";
@@ -13,12 +14,21 @@ import DexIndicator from "../DexIndicator";
 function Camera() {
     // states and ref
     const camera = useRef();
+    const isFocused = useIsFocused();
     const [loading, setLoading] = useState();
     const [preview, setPreview] = useState();
     const [description, setDescription] = useState("");
     const [twIntervalActive, setTwIntervalActive] = useState();
     const [speechStarted, setSpeechStarted] = useState(false);
     // functions
+    const resetCamera = () => {
+        camera.current?.resumePreview();
+        if (twIntervalActive) clearInterval(twIntervalActive);
+        Speech.stop();
+        setTwIntervalActive(undefined);
+        setPreview(undefined);
+        setDescription("");
+    };
     const handleTakePicture = async () => {
         if (!camera.current || loading) return;
         if (!preview) {
@@ -43,15 +53,14 @@ function Camera() {
             }
             setLoading(false);
         } else {
-            camera.current.resumePreview();
-            if (twIntervalActive) clearInterval(twIntervalActive);
-            Speech.stop();
-            setTwIntervalActive(undefined);
-            setPreview(undefined);
-            setDescription("");
+            resetCamera();
         }
     };
-
+    useEffect(() => {
+        if (!isFocused) {
+            resetCamera();
+        }
+    }, [isFocused]);
     const descriptionEffectHandler = (description) => {
         //speech init
         const speechOptions = {

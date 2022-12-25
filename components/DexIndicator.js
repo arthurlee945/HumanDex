@@ -25,7 +25,7 @@ function DexIndicator({ speechStarted }) {
                     <Image blurRadius={15} style={styles.shadeImage} source={require("../assets/shade.png")} />
                 </View>
             </View>
-            <LibraryButton />
+            <LibraryButton speechStarted={speechStarted} />
         </View>
     );
 }

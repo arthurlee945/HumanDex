@@ -1,44 +1,42 @@
-import React from "react";
 import { View, Animated, Pressable, Dimensions, useWindowDimensions, Easing, Image, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Color } from "../../constants/styles";
 import { useRef } from "react";
-function LibraryButton() {
+function LibraryButton({ speechStarted }) {
     const { width } = useWindowDimensions();
     const navigation = useNavigation();
-    const buttonAniRef = useRef([new Animated.Value(0), new Animated.Value(1)]).current;
+    const buttonAniRef = useRef(new Animated.Value(0)).current;
     const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
     const handleLibraryPress = () => {
         const baseConfig = {
             duration: 500,
             useNativeDriver: true,
-            easing: Easing.back(),
+            easing: Easing.linear(),
         };
-        Animated.parallel([
-            Animated.timing(buttonAniRef[0], { toValue: width * 1.5, ...baseConfig }),
-            Animated.timing(buttonAniRef[1], { toValue: 0, ...baseConfig }),
-        ]).start(({ finished }) => {
-            finished && navigation.navigate("Collection");
+        Animated.timing(buttonAniRef[1], { toValue: -width * 0.1, ...baseConfig }).start(({ finished }) => {
+            finished && Animated.timing(buttonAniRef[1], { toValue: 0, ...baseConfig }).start();
         });
     };
+
     return (
         <View style={styles.container}>
-            <AnimatedPressable
-                style={[
-                    styles.pressable,
-                    {
-                        opacity: buttonAniRef[1],
-                        transform: [
-                            {
-                                translateX: buttonAniRef[0],
-                            },
-                        ],
-                    },
-                ]}
-                onPress={handleLibraryPress}
-            >
+            <Pressable style={styles.pressable} onPress={!speechStarted && handleLibraryPress}>
                 <Image style={styles.icon} source={require("../../assets/pokedexlibrary.png")} resizeMode="contain" />
-            </AnimatedPressable>
+                <Animated.Image
+                    style={[
+                        styles.coverIcon,
+                        {
+                            transform: [
+                                {
+                                    translateX: buttonAniRef[1],
+                                },
+                            ],
+                        },
+                    ]}
+                    source={require("../../assets/pokedexlibrarycover.png")}
+                    resizeMode="contain"
+                />
+            </Pressable>
         </View>
     );
 }
@@ -58,5 +56,10 @@ const styles = StyleSheet.create({
     icon: {
         width: "100%",
         tintColor: Color.white,
+    },
+    coverIcon: {
+        position: "absolute",
+        width: "100%",
+        tintColor: Color.black,
     },
 });
