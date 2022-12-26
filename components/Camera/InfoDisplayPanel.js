@@ -5,7 +5,7 @@ function InfoDisplayPanel({ children }) {
     return (
         <ScrollView style={[styles.displayPanel, outline]}>
             <View>
-                <Text style={[styles.text, { fontSize: 14 * fontScale }]}>{children}</Text>
+                <Text style={[styles.text, { fontSize: 16 * fontScale }]}>{children}</Text>
             </View>
         </ScrollView>
     );
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     displayPanel: {
         width: "65%",
         backgroundColor: Color.green200,
-        padding: 7,
+        padding: 5,
         borderRadius: 5,
     },
     text: {

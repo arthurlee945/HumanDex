@@ -1,11 +1,15 @@
 import { View, Text, Button, StyleSheet } from "react-native";
+//Components
 import ScreenContentView from "../components/ScreenContentView";
+import NavBar from "../components/Nav/NavBar";
 function CollectionScreen({ navigation }) {
     return (
         <View style={styles.screen}>
-            <ScreenContentView style={styles.contentContainer}>
-                <Text>Collection</Text>
-                <Button title="button" onPress={() => navigation.navigate("Dex")} />
+            <ScreenContentView style={styles.container}>
+                <NavBar name="Collection" />
+                <View style={styles.contentContainer}>
+                    <Button title="button" onPress={() => navigation.navigate("Dex")} />
+                </View>
             </ScreenContentView>
         </View>
     );
@@ -18,7 +22,10 @@ const styles = StyleSheet.create({
         flex: 1,
         overflow: "hidden",
     },
-    contentContainer: {
+    container: {
         flex: 1,
+    },
+    contentContainer: {
+        padding: 20,
     },
 });

@@ -6,15 +6,16 @@ function LibraryButton({ speechStarted }) {
     const { width } = useWindowDimensions();
     const navigation = useNavigation();
     const buttonAniRef = useRef(new Animated.Value(0)).current;
-    const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
     const handleLibraryPress = () => {
         const baseConfig = {
-            duration: 500,
+            duration: 100,
             useNativeDriver: true,
-            easing: Easing.linear(),
         };
-        Animated.timing(buttonAniRef[1], { toValue: -width * 0.1, ...baseConfig }).start(({ finished }) => {
-            finished && Animated.timing(buttonAniRef[1], { toValue: 0, ...baseConfig }).start();
+        Animated.timing(buttonAniRef, { toValue: -width * 0.075, ...baseConfig }).start(({ finished }) => {
+            finished &&
+                Animated.timing(buttonAniRef, { toValue: 0, ...baseConfig }).start(({ finished }) => {
+                    finished && navigation.navigate("Collection");
+                });
         });
     };
 
@@ -28,7 +29,7 @@ function LibraryButton({ speechStarted }) {
                         {
                             transform: [
                                 {
-                                    translateX: buttonAniRef[1],
+                                    translateX: buttonAniRef,
                                 },
                             ],
                         },
@@ -60,6 +61,6 @@ const styles = StyleSheet.create({
     coverIcon: {
         position: "absolute",
         width: "100%",
-        tintColor: Color.black,
+        tintColor: Color.white,
     },
 });
