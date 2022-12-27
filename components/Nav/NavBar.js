@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 //components
 import ArrowButton from "./ArrowButton";
 import AboutButton from "./AboutButton";
-function NavBar({ name }) {
+function NavBar({ name = "", aboutButton = true }) {
     const navigation = useNavigation();
     const { fontScale } = useWindowDimensions();
     return (
@@ -17,12 +17,14 @@ function NavBar({ name }) {
                 }}
             />
             <Text style={[styles.name, { fontSize: 16 * fontScale }]}>{name}</Text>
-            <AboutButton
-                style={styles.about}
-                onPress={() => {
-                    navigation.navigate("About");
-                }}
-            />
+            {aboutButton && (
+                <AboutButton
+                    style={styles.about}
+                    onPress={() => {
+                        navigation.navigate("About");
+                    }}
+                />
+            )}
         </View>
     );
 }
@@ -41,9 +43,11 @@ const styles = StyleSheet.create({
         width: "100%",
     },
     name: {
+        flex: 1,
         color: Color.white,
         fontWeight: "bold",
         textTransform: "uppercase",
+        textAlign: "center",
     },
     arrow: {
         width: width * 0.1,

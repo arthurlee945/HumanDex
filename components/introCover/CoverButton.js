@@ -24,28 +24,28 @@ function CoverButton({ onPress }) {
             looped: false,
             duration: 400,
         }));
-        Animated.parallel([
-            Animated.timing(buttonAnime[0], {
-                toValue: 3,
-                ...baseConfig,
-            }),
-            Animated.timing(buttonAnime[1], {
-                toValue: 0,
-                ...baseConfig,
-            }),
-        ]).start(({ finished }) => {
-            finished &&
-                Animated.parallel([
-                    Animated.timing(buttonAnime[0], {
-                        toValue: 0,
-                        ...baseConfig,
-                    }),
-                    Animated.timing(buttonAnime[1], {
-                        toValue: 3,
-                        ...baseConfig,
-                    }),
-                ]).start();
-        });
+        Animated.sequence([
+            Animated.parallel([
+                Animated.timing(buttonAnime[0], {
+                    toValue: 3,
+                    ...baseConfig,
+                }),
+                Animated.timing(buttonAnime[1], {
+                    toValue: 0,
+                    ...baseConfig,
+                }),
+            ]),
+            Animated.parallel([
+                Animated.timing(buttonAnime[0], {
+                    toValue: 0,
+                    ...baseConfig,
+                }),
+                Animated.timing(buttonAnime[1], {
+                    toValue: 3,
+                    ...baseConfig,
+                }),
+            ]),
+        ]).start();
         onPress();
     };
     return (

@@ -3,7 +3,7 @@ import { Color } from "../../constants/styles";
 //components
 import HumanCard from "./HumanCard";
 
-function CollectionList({ humans }) {
+function CollectionList({ humans, onSelect, onDelete }) {
     const { fontScale } = useWindowDimensions();
     if (!humans || humans.length === 0) {
         return (
@@ -12,13 +12,14 @@ function CollectionList({ humans }) {
             </View>
         );
     }
-
     return (
         <FlatList
             style={[styles.defaultSizing, styles.flContainer]}
             data={humans}
             keyExtractor={(item) => item.id}
-            rednerItem={({ item, index }) => <HumanCard human={item} />}
+            renderItem={({ item, index }) => (
+                <HumanCard index={index} human={item} onSelect={onSelect} onDelete={onDelete} />
+            )}
         />
     );
 }
@@ -27,19 +28,16 @@ export default CollectionList;
 
 const styles = StyleSheet.create({
     defaultSizing: {
+        flex: 1,
         width: "100%",
         height: "100%",
     },
     noItemContainer: {
-        flex: 1,
         alignItems: "center",
         justifyContent: "center",
     },
     noItemText: {
         color: Color.white,
     },
-    flContainer: {
-        flex: 1,
-        borderWidth: 1,
-    },
+    flContainer: {},
 });

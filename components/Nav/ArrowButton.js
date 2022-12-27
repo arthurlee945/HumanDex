@@ -5,20 +5,20 @@ function ArrowButton({ style, color, onPress }) {
     const arrowRef = useRef(new Animated.Value(0)).current;
     const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
     const handleButtonPress = () => {
-        Animated.timing(arrowRef, {
-            useNativeDriver: true,
-            duration: 150,
-            toValue: -10,
-            easing: Easing.back(),
-        }).start(({ finished }) => {
-            finished &&
-                Animated.timing(arrowRef, {
-                    useNativeDriver: true,
-                    duration: 100,
-                    toValue: 0,
-                }).start(({ finished }) => {
-                    finished && onPress();
-                });
+        Animated.sequence([
+            Animated.timing(arrowRef, {
+                useNativeDriver: true,
+                duration: 150,
+                toValue: -10,
+                easing: Easing.back(),
+            }),
+            Animated.timing(arrowRef, {
+                useNativeDriver: true,
+                duration: 100,
+                toValue: 0,
+            }),
+        ]).start(({ finished }) => {
+            finished && onPress();
         });
     };
     return (

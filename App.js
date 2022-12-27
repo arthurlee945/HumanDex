@@ -23,7 +23,7 @@ export default function App() {
     useEffect(() => {
         (async () => {
             try {
-                //await deleteTable()
+                // await deleteTable();
                 await init();
                 setInitLoading(false);
             } catch (err) {

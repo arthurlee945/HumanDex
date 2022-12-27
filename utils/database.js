@@ -30,7 +30,6 @@ export function init() {
 }
 
 export function addHuman(human) {
-    console.log("New Human Entry Added");
     const promise = new Promise((resolve, reject) => {
         database.transaction((tx) => {
             tx.executeSql(

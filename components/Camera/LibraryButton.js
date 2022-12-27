@@ -11,12 +11,10 @@ function LibraryButton({ speechStarted }) {
             duration: 100,
             useNativeDriver: true,
         };
-        Animated.timing(buttonAniRef, { toValue: -width * 0.075, ...baseConfig }).start(({ finished }) => {
-            finished &&
-                Animated.timing(buttonAniRef, { toValue: 0, ...baseConfig }).start(({ finished }) => {
-                    finished && navigation.navigate("Collection");
-                });
-        });
+        Animated.sequence([
+            Animated.timing(buttonAniRef, { toValue: -width * 0.075, ...baseConfig }),
+            Animated.timing(buttonAniRef, { toValue: 0, ...baseConfig }),
+        ]).start(({ finished }) => finished && navigation.navigate("Collection"));
     };
 
     return (
