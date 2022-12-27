@@ -2,7 +2,7 @@ import { View, Image, StyleSheet } from "react-native";
 import { useEffect, useRef, useState } from "react";
 import * as Speech from "expo-speech";
 import { useIsFocused } from "@react-navigation/native";
-import { addHuman } from "../../utils/database";
+import { addHuman, sampleData } from "../../utils/database";
 import { getDescription, useCallback, processImage, resizeImage } from "../../utils/processing";
 import { Color, outline, botShade } from "../../constants/styles";
 //components
@@ -36,19 +36,31 @@ function Camera() {
             const photo = await camera.current.takePictureAsync();
             camera.current.pausePreview();
             const resizedImage = await resizeImage(photo.uri);
-            const dataUrl = `data:image/jpg;base64,${resizedImage.base64}`;
+            const dataUri = `data:image/jpg;base64,${resizedImage.base64}`;
             setPreview(resizedImage.uri);
             try {
-                // const processedImage = await processImage(dataUrl);
+                // const processedImage = await processImage(dataUri);
                 // const { age, dominant_race, dominant_emotion, gender } = processedImage.data.instance_1;
 
                 // const descriptionRes = await getDescription(age, dominant_race, gender, dominant_emotion);
                 // const description = descriptionRes.data.choices[0].text;
-                const description =
-                    "This 26 year old, Asian female is so happy she could burst into a spontaneous dance at any given moment! She radiates positivity and joy, always looking for the next opportunity to squeeze in a good laugh.";
+
+                //sample
+                const { age, dominant_race, dominant_emotion, gender, description } = sampleData;
+
+                const newHuman = {
+                    age: age,
+                    race: dominant_race,
+                    gender: gender,
+                    emotion: dominant_emotion,
+                    description: description,
+                    imageUri: resizedImage.uri,
+                };
+
+                await addHuman(newHuman);
                 descriptionEffectHandler(description);
             } catch (err) {
-                camera.current.resumePreview();
+                resetCamera();
                 console.log(err);
             }
             setLoading(false);

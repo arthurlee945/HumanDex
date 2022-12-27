@@ -20,7 +20,6 @@ function NavBar({ name }) {
             <AboutButton
                 style={styles.about}
                 onPress={() => {
-                    console.log("hello?");
                     navigation.navigate("About");
                 }}
             />
@@ -47,11 +46,14 @@ const styles = StyleSheet.create({
         textTransform: "uppercase",
     },
     arrow: {
-        width: width * 0.14,
-        height: width * 0.1,
+        width: width * 0.1,
+        height: width * 0.075,
+        aspectRatio: 1 / 0.75,
+        alignItems: "center",
     },
     about: {
         width: width * 0.11,
         height: width * 0.11,
+        aspectRatio: 1 / 1,
     },
 });

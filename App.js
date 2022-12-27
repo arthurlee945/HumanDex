@@ -5,7 +5,7 @@ import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as SplashScreen from "expo-splash-screen";
-import { init } from "./utils/database";
+import { init, deleteTable } from "./utils/database";
 //Screens
 import DexScreen from "./screens/DexScreen";
 import CollectionScreen from "./screens/CollectionScreen";
@@ -23,6 +23,7 @@ export default function App() {
     useEffect(() => {
         (async () => {
             try {
+                //await deleteTable()
                 await init();
                 setInitLoading(false);
             } catch (err) {

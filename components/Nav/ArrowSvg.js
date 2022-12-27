@@ -8,7 +8,8 @@ function ArrowSvg({ color }) {
             y="0%"
             width="100%"
             height="100%"
-            viewBox="0 0 1024.0 512.0"
+            viewBox="0 0 768.0 512.0"
+            enable-background="new 0 0 768.0 512.0"
         >
             <Path
                 fill={color}
@@ -19,7 +20,7 @@ function ArrowSvg({ color }) {
                 strokeWidth="57.06787"
                 strokeLinejoin="round"
                 strokeLinecap="round"
-                d="M356.46,29.94L36.37,256.00L356.46,482.06M987.63,256.00L356.22,256.00"
+                d="M356.46,29.94L36.38,256.00L356.46,482.06M738.00,256.00L356.22,256.00"
             />
             <Path
                 fill={color}
