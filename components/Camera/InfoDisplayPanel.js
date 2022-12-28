@@ -1,26 +1,40 @@
-import { ScrollView, View, Text, StyleSheet, useWindowDimensions } from "react-native";
+import { ScrollView, Image, View, Text, StyleSheet, useWindowDimensions } from "react-native";
 import { Color, outline } from "../../constants/styles";
 function InfoDisplayPanel({ children }) {
     const { fontScale } = useWindowDimensions();
     return (
-        <ScrollView style={[styles.displayPanel, outline]}>
-            <View>
+        <View style={[styles.mainDisplayContainer, outline]}>
+            <Image style={styles.bgImage} source={require("../../assets/pixel-org.png")} />
+            <ScrollView style={styles.displayPanel}>
                 <Text style={[styles.text, { fontSize: 16 * fontScale }]}>{children}</Text>
-            </View>
-        </ScrollView>
+            </ScrollView>
+        </View>
     );
 }
 
 export default InfoDisplayPanel;
 
 const styles = StyleSheet.create({
-    displayPanel: {
+    mainDisplayContainer: {
         width: "65%",
         backgroundColor: Color.green200,
+        borderRadius: 5,
+        overflow: "hidden",
+    },
+    displayPanel: {
+        flex: 1,
         padding: 5,
         borderRadius: 5,
     },
     text: {
         paddingBottom: 14,
+    },
+    bgImage: {
+        position: "absolute",
+        flex: 1,
+        width: "100%",
+        height: "100%",
+        resizeMode: "repeat",
+        opacity: 0.25,
     },
 });

@@ -19,7 +19,6 @@ function DetailContent({ human }) {
     if (!human) {
         return <LoadingIndicator color={Color.white} />;
     }
-    const UnderLine = () => <View style={styles.underline}></View>;
     return (
         <ScrollView style={styles.contentContainer}>
             <View style={styles.imageContainer}>
@@ -29,18 +28,18 @@ function DetailContent({ human }) {
             </View>
             <View style={[styles.infoOuterContainer, outline]}>
                 <LinearGradient style={[styles.infoContainer]} colors={[Color.blue300, Color.blue250, Color.blue300]}>
-                    <Text style={[defaultFontSizing.infoTitle]}>
+                    <Text style={[defaultFontSizing.infoTitle, styles.underline]}>
                         Age: <Text style={[defaultFontSizing.info]}>{human.age}</Text>
                     </Text>
-                    <UnderLine />
-                    <Text style={[defaultFontSizing.infoTitle]}>
+
+                    <Text style={[defaultFontSizing.infoTitle, styles.underline]}>
                         Race: <Text style={[defaultFontSizing.info]}>{human.race}</Text>
                     </Text>
-                    <UnderLine />
-                    <Text style={[defaultFontSizing.infoTitle]}>
+
+                    <Text style={[defaultFontSizing.infoTitle, styles.underline]}>
                         Gender: <Text style={[defaultFontSizing.info]}>{human.gender}</Text>
                     </Text>
-                    <UnderLine />
+
                     <Text style={[defaultFontSizing.infoTitle]}>Description:</Text>
                     <Text style={[defaultFontSizing.info]}>{human.description}</Text>
                 </LinearGradient>
@@ -85,11 +84,9 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     },
     underline: {
-        height: 1,
-        width: "100%",
-        backgroundColor: Color.white,
-        marginTop: 1,
+        borderBottomWidth: 1,
+        borderColor: Color.gray,
         marginBottom: 15,
-        opacity: 0.5,
+        paddingBottom: 1,
     },
 });

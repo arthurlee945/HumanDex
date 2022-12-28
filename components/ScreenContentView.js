@@ -1,4 +1,4 @@
-import { SafeAreaView, StatusBar, StyleSheet, Platform } from "react-native";
+import { SafeAreaView, StatusBar, StyleSheet, Platform, ImageBackground } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Color } from "../constants/styles";
 
@@ -9,7 +9,9 @@ function ScreenContentView({ children, style, onLayout }) {
             onLayout={onLayout}
             style={styles.gradientView}
         >
-            <SafeAreaView style={[styles.AndroidSafeArea, style]}>{children}</SafeAreaView>
+            <ImageBackground style={styles.bgContainer} source={require("../assets/lines.png")} resizeMode="repeat">
+                <SafeAreaView style={[styles.AndroidSafeArea, style]}>{children}</SafeAreaView>
+            </ImageBackground>
         </LinearGradient>
     );
 }
@@ -19,6 +21,10 @@ export default ScreenContentView;
 const styles = StyleSheet.create({
     gradientView: {
         flex: 1,
+    },
+    bgContainer: {
+        flex: 1,
+        resizeMode: "repeat",
     },
     AndroidSafeArea: {
         flex: 1,

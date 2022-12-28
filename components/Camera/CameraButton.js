@@ -52,7 +52,7 @@ function CameraButton({ onPress }) {
                         },
                     ]}
                 >
-                    <Image style={styles.buttonImage} blurRadius={4} source={require("../../assets/dexControl.png")} />
+                    <Image style={styles.buttonImage} blurRadius={3} source={require("../../assets/dexControl.png")} />
                 </Animated.View>
             </Pressable>
         </View>

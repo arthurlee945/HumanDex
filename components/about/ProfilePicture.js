@@ -41,6 +41,11 @@ function ProfilePicture() {
                         ]}
                     >
                         <Image style={[styles.imageInner, outline]} source={require("../../assets/profile.png")} />
+                        <Image
+                            style={styles.pixelTextImage}
+                            source={require("../../assets/pixel-org.png")}
+                            resizeMode="repeat"
+                        />
                     </AnimatablePressable>
                 </View>
             </View>
@@ -81,5 +86,13 @@ const styles = StyleSheet.create({
         width: "100%",
         height: "100%",
         borderRadius: 15,
+    },
+    pixelTextImage: {
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        opacity: 0.5,
     },
 });

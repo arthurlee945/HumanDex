@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { Image, Text, View, Pressable, StyleSheet, useWindowDimensions, Animated } from "react-native";
+import { Image, Text, View, Pressable, StyleSheet, useWindowDimensions, Animated, ImageBackground } from "react-native";
 import { Color, outline, botShade } from "../../constants/styles";
 //component
 import TrashIconButton from "./TrashIconButton";
@@ -48,32 +48,38 @@ function HumanCard({ human, index, onSelect, onDelete }) {
             ]}
             onPress={handleCardClick}
         >
-            <Image style={stlyes.image} source={{ uri: human.imageUri }} />
-            <View style={stlyes.container}>
-                <View style={stlyes.infoContainer}>
-                    <Text style={[defaultFontSizing.infoTitle, stlyes.infoDec]}>
-                        No. <Text style={[defaultFontSizing.info, stlyes.info]}>{index + 1}</Text>
-                    </Text>
-                    <Text style={[defaultFontSizing.infoTitle]}>
-                        Age: <Text style={[defaultFontSizing.info, stlyes.info]}>{human.age}</Text>
-                    </Text>
-                    <Text style={[defaultFontSizing.infoTitle]}>
-                        Race: <Text style={[defaultFontSizing.info, stlyes.info]}>{human.race}</Text>
-                    </Text>
-                    <Text style={[defaultFontSizing.infoTitle]}>
-                        Gender: <Text style={[defaultFontSizing.info, stlyes.info]}>{human.gender}</Text>
-                    </Text>
-                    <Text style={[defaultFontSizing.infoTitle]}>
-                        Emotion: <Text style={[defaultFontSizing.info, stlyes.info]}>{human.emotion}</Text>
-                    </Text>
+            <ImageBackground
+                source={require("../../assets/lines.png")}
+                resizeMode="repeat"
+                style={stlyes.lineBgContainer}
+            >
+                <Image style={stlyes.image} source={{ uri: human.imageUri }} />
+                <View style={stlyes.container}>
+                    <View style={stlyes.infoContainer}>
+                        <Text style={[defaultFontSizing.infoTitle, stlyes.infoDec]}>
+                            No. <Text style={[defaultFontSizing.info, stlyes.info]}>{index + 1}</Text>
+                        </Text>
+                        <Text style={[defaultFontSizing.infoTitle]}>
+                            Age: <Text style={[defaultFontSizing.info, stlyes.info]}>{human.age}</Text>
+                        </Text>
+                        <Text style={[defaultFontSizing.infoTitle]}>
+                            Race: <Text style={[defaultFontSizing.info, stlyes.info]}>{human.race}</Text>
+                        </Text>
+                        <Text style={[defaultFontSizing.infoTitle]}>
+                            Gender: <Text style={[defaultFontSizing.info, stlyes.info]}>{human.gender}</Text>
+                        </Text>
+                        <Text style={[defaultFontSizing.infoTitle]}>
+                            Emotion: <Text style={[defaultFontSizing.info, stlyes.info]}>{human.emotion}</Text>
+                        </Text>
+                    </View>
+                    <TrashIconButton
+                        onPress={onDelete.bind(this, human.id, human.imageUri)}
+                        color={Color.red100}
+                        bgColor={Color.white}
+                        size={32}
+                    />
                 </View>
-                <TrashIconButton
-                    onPress={onDelete.bind(this, human.id, human.imageUri)}
-                    color={Color.red100}
-                    bgColor={Color.white}
-                    size={32}
-                />
-            </View>
+            </ImageBackground>
         </AnimatablePressable>
     );
 }
@@ -81,8 +87,11 @@ function HumanCard({ human, index, onSelect, onDelete }) {
 export default HumanCard;
 const stlyes = StyleSheet.create({
     card: {
-        flexDirection: "row",
         margin: 20,
+        borderRadius: 10,
+    },
+    lineBgContainer: {
+        flexDirection: "row",
         padding: 15,
         borderRadius: 10,
         backgroundColor: Color.red150,

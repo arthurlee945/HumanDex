@@ -16,12 +16,11 @@ function AboutContent() {
             marginBottom: 10,
         },
     };
-    const UnderLine = () => <View style={styles.underline}></View>;
+
     return (
         <ScrollView style={styles.container}>
             <View style={styles.introContainer}>
-                <Text style={defaultFont.title}>Hi! My Name is Arthur!</Text>
-                <UnderLine />
+                <Text style={[defaultFont.title, styles.underline]}>Hi! My Name is Arthur!</Text>
             </View>
             <ProfilePicture />
             <LinearGradient
@@ -50,6 +49,7 @@ const styles = StyleSheet.create({
     introContainer: {
         width: "100%",
         marginTop: 20,
+        alignItems: "center",
     },
     infoContainer: {
         padding: 15,
@@ -57,11 +57,14 @@ const styles = StyleSheet.create({
         backgroundColor: Color.blue300,
         overflow: "hidden",
     },
-    underline: {
-        height: 2,
+    underlineCont: {
         width: "100%",
-        backgroundColor: Color.white,
-        marginTop: 1,
-        opacity: 0.5,
+        alignItems: "center",
+    },
+    underline: {
+        borderBottomWidth: 2,
+        borderColor: Color.gray,
+        paddingHorizontal: 20,
+        paddingBottom: 1,
     },
 });
