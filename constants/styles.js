@@ -14,9 +14,12 @@ export const Color = {
     blue100: "#28ABFD",
     blue150: "#0293fd",
     blue200: "#176A9F",
+    blue250: "#12547e",
+    blue300: "#104b71",
     green50: "#73e57e",
     green100: "#4FAE5D",
     green200: "#337446",
+    green300: "#337446",
 };
 
 export const topShade = {

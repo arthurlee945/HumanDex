@@ -68,7 +68,7 @@ function HumanCard({ human, index, onSelect, onDelete }) {
                     </Text>
                 </View>
                 <TrashIconButton
-                    onPress={onDelete.bind(this, human.id)}
+                    onPress={onDelete.bind(this, human.id, human.imageUri)}
                     color={Color.red100}
                     bgColor={Color.white}
                     size={32}

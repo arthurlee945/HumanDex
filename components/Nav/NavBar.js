@@ -4,7 +4,8 @@ import { useNavigation } from "@react-navigation/native";
 //components
 import ArrowButton from "./ArrowButton";
 import AboutButton from "./AboutButton";
-function NavBar({ name = "", aboutButton = true }) {
+import HomeButton from "./HomeButton";
+function NavBar({ name = "", aboutButton = true, homeButton = false }) {
     const navigation = useNavigation();
     const { fontScale } = useWindowDimensions();
     return (
@@ -19,9 +20,16 @@ function NavBar({ name = "", aboutButton = true }) {
             <Text style={[styles.name, { fontSize: 16 * fontScale }]}>{name}</Text>
             {aboutButton && (
                 <AboutButton
-                    style={styles.about}
+                    style={styles.icon}
                     onPress={() => {
                         navigation.navigate("About");
+                    }}
+                />
+            )}
+            {homeButton && (
+                <HomeButton
+                    onPress={() => {
+                        navigation.navigate("Dex");
                     }}
                 />
             )}
@@ -55,7 +63,7 @@ const styles = StyleSheet.create({
         aspectRatio: 1 / 0.75,
         alignItems: "center",
     },
-    about: {
+    icon: {
         width: width * 0.11,
         height: width * 0.11,
         aspectRatio: 1 / 1,

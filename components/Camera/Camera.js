@@ -121,7 +121,7 @@ function Camera() {
                                 />
                             </View>
                         </View>
-                        <CameraScreen camera={camera} preview={preview} loading={loading} />
+                        <CameraScreen camera={camera} preview={preview} loading={loading} isFocused={isFocused} />
                         <View style={styles.botIndicatorCont}>
                             <View style={styles.redBot}>
                                 <Image

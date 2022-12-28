@@ -4,7 +4,7 @@ import { Color } from "../../constants/styles";
 import CameraPreview from "./CameraPreview";
 import Button from "../Button";
 import LoadingIndicator from "../LoadingIndicator";
-function CameraScreen({ camera, preview, loading }) {
+function CameraScreen({ camera, preview, loading, isFocused }) {
     const { fontScale } = useWindowDimensions();
     const [permission, requestPermission] = Camera.useCameraPermissions();
 
@@ -24,7 +24,7 @@ function CameraScreen({ camera, preview, loading }) {
 
     return (
         <View style={styles.csContainer}>
-            <Camera ref={camera} style={styles.camera} type={CameraType.back} ratio="1:1"></Camera>
+            {isFocused && <Camera ref={camera} style={styles.camera} type={CameraType.back} ratio="1:1"></Camera>}
             {preview && <CameraPreview photo={preview} />}
             {loading && <LoadingIndicator />}
         </View>

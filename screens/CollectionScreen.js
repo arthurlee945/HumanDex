@@ -23,9 +23,9 @@ function CollectionScreen({ navigation }) {
         }
         setLoading(false);
     };
-    const handleDeleteCard = async (id) => {
+    const handleDeleteCard = async (id, imageUri) => {
         try {
-            await deleteHuman(id);
+            await deleteHuman(id, imageUri);
             renderCards();
         } catch (err) {
             console.log(err);

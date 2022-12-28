@@ -1,4 +1,6 @@
 import * as SQLite from "expo-sqlite";
+import { deleteAsync } from "expo-file-system";
+
 import Human from "../models/human";
 
 const database = SQLite.openDatabase("humans.db");
@@ -106,13 +108,14 @@ export function fetchHumanDetail(id) {
     return promise;
 }
 
-export function deleteHuman(id) {
+export function deleteHuman(id, imageUri) {
     const promise = new Promise((resolve, reject) => {
         database.transaction((tx) => {
             tx.executeSql(
                 "DELETE FROM humans WHERE id = ?",
                 [id],
-                (_, result) => {
+                async (_, result) => {
+                    await deleteAsync(imageUri);
                     resolve("Entry Deleted");
                 },
                 (_, error) => {

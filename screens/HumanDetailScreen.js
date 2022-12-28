@@ -1,13 +1,24 @@
-import { View, Text, StyleSheet } from "react-native";
+import { useState, useEffect } from "react";
+import { View, StyleSheet } from "react-native";
+import { fetchHumanDetail } from "../utils/database";
 //components
 import ScreenContentView from "../components/ScreenContentView";
 import NavBar from "../components/Nav/NavBar";
-function HumanDetailScreen({ params }) {
+import DetailContent from "../components/detail/DetailContent";
+function HumanDetailScreen({ route }) {
+    const humanId = route.params?.humanId;
+    const [humanDetail, setHumanDetail] = useState();
+    useEffect(() => {
+        (async () => {
+            const humanData = await fetchHumanDetail(humanId);
+            setHumanDetail(humanData);
+        })();
+    }, []);
     return (
         <View style={styles.screen}>
             <ScreenContentView>
-                <NavBar />
-                <Text>Detail Screen</Text>
+                <NavBar name={humanDetail ? `No. ${humanDetail.id}` : ""} />
+                <DetailContent human={humanDetail} />
             </ScreenContentView>
         </View>
     );
