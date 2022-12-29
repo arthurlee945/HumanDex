@@ -3,7 +3,7 @@ import { Color, outline } from "../constants/styles";
 //components
 import RippleGradient from "./RippleGradient";
 import LibraryButton from "./Camera/LibraryButton";
-function DexIndicator({ speechStarted }) {
+function DexIndicator({ speechStarted, loading }) {
     return (
         <View style={styles.Container}>
             <View style={[styles.indicatorContainer]}>
@@ -25,7 +25,7 @@ function DexIndicator({ speechStarted }) {
                     <Image blurRadius={15} style={styles.shadeImage} source={require("../assets/shade.png")} />
                 </View>
             </View>
-            <LibraryButton speechStarted={speechStarted} />
+            <LibraryButton speechStarted={speechStarted} loading={loading} />
         </View>
     );
 }

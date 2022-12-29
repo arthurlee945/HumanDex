@@ -20,6 +20,11 @@ function Camera() {
     const [description, setDescription] = useState("");
     const [twIntervalActive, setTwIntervalActive] = useState();
     const [speechStarted, setSpeechStarted] = useState(false);
+    const [serverError, setServerError] = useState({
+        server: false,
+        auth: false,
+    });
+
     // functions
     const resetCamera = () => {
         camera.current?.resumePreview();
@@ -28,9 +33,10 @@ function Camera() {
         setTwIntervalActive(undefined);
         setPreview(undefined);
         setDescription("");
+        setServerError((currStatus) => ({ ...currStatus, server: false, auth: false }));
     };
     const handleTakePicture = async () => {
-        if (!camera.current || loading) return;
+        if (!camera.current || loading || serverError.auth || serverError.server) return;
         if (!preview) {
             setLoading(true);
             const photo = await camera.current.takePictureAsync();
@@ -41,12 +47,11 @@ function Camera() {
             try {
                 // const processedImage = await processImage(dataUri);
                 // const { age, dominant_race, dominant_emotion, gender } = processedImage.data.instance_1;
-
-                // const descriptionRes = await getDescription(age, dominant_race, gender, dominant_emotion);
-                // const description = descriptionRes.data.choices[0].text;
-
+                const { age, dominant_race, dominant_emotion, gender } = sampleData;
+                const descriptionRes = await getDescription(age, dominant_race, gender, dominant_emotion);
+                const description = descriptionRes.data.choices[0].text.replace(/^[\n]*/, "");
                 //sample
-                const { age, dominant_race, dominant_emotion, gender, description } = sampleData;
+                // const { age, dominant_race, dominant_emotion, gender, description } = sampleData;
 
                 const newHuman = {
                     age: age,
@@ -60,8 +65,11 @@ function Camera() {
                 await addHuman(newHuman);
                 descriptionEffectHandler(description);
             } catch (err) {
-                resetCamera();
-                console.log(err);
+                setServerError((currStatus) => ({
+                    ...currStatus,
+                    server: err.response.status === 404 ? true : false,
+                    auth: err.response.status === 401 ? true : false,
+                }));
             }
             setLoading(false);
         } else {
@@ -73,10 +81,11 @@ function Camera() {
             resetCamera();
         }
     }, [isFocused]);
+
     const descriptionEffectHandler = (description) => {
         //speech init
         const speechOptions = {
-            pitch: 0.3,
+            pitch: 0.25,
             onStart: () => {
                 setSpeechStarted(true);
             },
@@ -95,13 +104,13 @@ function Camera() {
             if (length === 0) return clearInterval(twInterval);
             setDescription((curr) => curr + description[fullLength - length]);
             length -= 1;
-        }, 50);
+        }, 30);
         setTwIntervalActive(twInterval);
     };
 
     return (
         <>
-            <DexIndicator speechStarted={speechStarted} />
+            <DexIndicator speechStarted={speechStarted} loading={loading} />
             <View style={styles.contentContainer}>
                 <View style={styles.cameraContainer}>
                     <View style={[styles.cameraBox, outline]}>
@@ -121,7 +130,13 @@ function Camera() {
                                 />
                             </View>
                         </View>
-                        <CameraScreen camera={camera} preview={preview} loading={loading} isFocused={isFocused} />
+                        <CameraScreen
+                            camera={camera}
+                            preview={preview}
+                            loading={loading}
+                            serverError={serverError}
+                            isFocused={isFocused}
+                        />
                         <View style={styles.botIndicatorCont}>
                             <View style={styles.redBot}>
                                 <Image

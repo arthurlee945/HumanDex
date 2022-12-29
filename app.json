@@ -27,7 +27,7 @@
         "extra": {
             "DF_API_URL": "http://arthurlee945.pythonanywhere.com",
             "OPENAI_URL": "https://api.openai.com/v1/completions",
-            "OPENAI_API_KEY": "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"
+            "OPENAI_API_KEY": "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"
         }
     }
 }

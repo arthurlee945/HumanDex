@@ -2,11 +2,12 @@ import { View, Animated, Pressable, Dimensions, useWindowDimensions, Easing, Ima
 import { useNavigation } from "@react-navigation/native";
 import { Color } from "../../constants/styles";
 import { useRef } from "react";
-function LibraryButton({ speechStarted }) {
+function LibraryButton({ speechStarted, loading }) {
     const { width } = useWindowDimensions();
     const navigation = useNavigation();
     const buttonAniRef = useRef(new Animated.Value(0)).current;
     const handleLibraryPress = () => {
+        if (speechStarted || loading) return;
         const baseConfig = {
             duration: 100,
             useNativeDriver: true,
@@ -19,7 +20,7 @@ function LibraryButton({ speechStarted }) {
 
     return (
         <View style={styles.container}>
-            <Pressable style={styles.pressable} onPress={!speechStarted && handleLibraryPress}>
+            <Pressable style={styles.pressable} onPress={handleLibraryPress}>
                 <Image style={styles.icon} source={require("../../assets/pokedexlibrary.png")} resizeMode="contain" />
                 <Animated.Image
                     style={[

@@ -31,15 +31,18 @@ function DetailContent({ human }) {
                     <Text style={[defaultFontSizing.infoTitle, styles.underline]}>
                         Age: <Text style={[defaultFontSizing.info]}>{human.age}</Text>
                     </Text>
-
                     <Text style={[defaultFontSizing.infoTitle, styles.underline]}>
                         Race: <Text style={[defaultFontSizing.info]}>{human.race}</Text>
                     </Text>
-
                     <Text style={[defaultFontSizing.infoTitle, styles.underline]}>
                         Gender: <Text style={[defaultFontSizing.info]}>{human.gender}</Text>
                     </Text>
-
+                    <Text style={[defaultFontSizing.infoTitle, styles.underline]}>
+                        Emotion:{" "}
+                        <Text style={[defaultFontSizing.info]}>{`${human.emotion[0].toUpperCase()}${human.emotion.slice(
+                            1
+                        )}`}</Text>
+                    </Text>
                     <Text style={[defaultFontSizing.infoTitle]}>Description:</Text>
                     <Text style={[defaultFontSizing.info]}>{human.description}</Text>
                 </LinearGradient>

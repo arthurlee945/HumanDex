@@ -5,7 +5,12 @@ function InfoDisplayPanel({ children }) {
     return (
         <View style={[styles.mainDisplayContainer, outline]}>
             <Image style={styles.bgImage} source={require("../../assets/pixel-org.png")} />
-            <ScrollView style={styles.displayPanel}>
+            <ScrollView
+                style={styles.displayPanel}
+                contentContainerStyle={{
+                    padding: 5,
+                }}
+            >
                 <Text style={[styles.text, { fontSize: 16 * fontScale }]}>{children}</Text>
             </ScrollView>
         </View>
@@ -23,11 +28,13 @@ const styles = StyleSheet.create({
     },
     displayPanel: {
         flex: 1,
-        padding: 5,
         borderRadius: 5,
     },
     text: {
-        paddingBottom: 14,
+        paddingBottom: 15,
+        includeFontPadding: false,
+        textAlignVertical: "center",
+        lineHeight: 20,
     },
     bgImage: {
         position: "absolute",

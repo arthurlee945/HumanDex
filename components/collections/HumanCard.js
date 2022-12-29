@@ -14,6 +14,7 @@ function HumanCard({ human, index, onSelect, onDelete }) {
         infoTitle: {
             fontSize: fontScale * 14,
             color: Color.white,
+            marginBottom: 1,
         },
     };
     const AnimatablePressable = Animated.createAnimatedComponent(Pressable);
@@ -87,7 +88,9 @@ function HumanCard({ human, index, onSelect, onDelete }) {
 export default HumanCard;
 const stlyes = StyleSheet.create({
     card: {
-        margin: 20,
+        marginHorizontal: 20,
+        marginTop: 20,
+        marginBottom: 10,
         borderRadius: 10,
     },
     lineBgContainer: {

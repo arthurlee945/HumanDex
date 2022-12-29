@@ -2,14 +2,16 @@ import axios from "axios";
 import Constants from "expo-constants";
 import { manipulateAsync } from "expo-image-manipulator";
 import { deleteAsync } from "expo-file-system";
+import { retrieveOpenAiKey } from "./database";
+//constants
+const { DF_API_URL, OPENAI_URL } = Constants.expoConfig.extra;
 
-const { DF_API_URL, OPENAI_URL, OPENAI_API_KEY } = Constants.expoConfig.extra;
-
-export const getDescription = (age, race, gender, emotion) => {
+export const getDescription = async (age, race, gender, emotion) => {
     console.log("Open AI Generating Prompt");
+    const retrievedKey = await retrieveOpenAiKey();
     const propmt = `Write a funny and goofy two to three sentences description of a person who is ${age} years old, ${race}, ${gender}, and currently ${emotion}.`;
     const header = {
-        Authorization: `Bearer ${OPENAI_API_KEY}`,
+        Authorization: `Bsearer ${retrievedKey.apiKey}`,
     };
     const data = {
         model: "text-davinci-003",
@@ -34,6 +36,7 @@ export const processImage = (dataUrl) => {
 };
 
 export const resizeImage = async (imageUri) => {
+    console.log("Resizing Image");
     const actions = [
         {
             resize: {

@@ -1,12 +1,16 @@
 import * as SQLite from "expo-sqlite";
+import Constants from "expo-constants";
 import { deleteAsync } from "expo-file-system";
 
 import Human from "../models/human";
 
 const database = SQLite.openDatabase("humans.db");
 
-export function init() {
-    const promise = new Promise((resolve, reject) => {
+//initial API KEY Probably won't work when this is live
+const { OPENAI_API_KEY } = Constants.expoConfig.extra;
+//initializer
+export function initTables() {
+    const humanPromise = new Promise((resolve, reject) => {
         database.transaction((tx) => {
             tx.executeSql(
                 `CREATE TABLE IF NOT EXISTS humans (
@@ -28,9 +32,31 @@ export function init() {
             );
         });
     });
-    return promise;
+    const OpenAiPromise = new Promise((resolve, reject) => {
+        database.transaction((tx) => {
+            tx.executeSql(
+                `CREATE TABLE IF NOT EXISTS openai (
+                    id INTEGER PRIMARY KEY NOT NULL,
+                    apiKey TEXT NOT NULL
+                )`,
+                [],
+                async (_, result) => {
+                    const getInitialKey = await retrieveOpenAiKey();
+                    if (!getInitialKey) {
+                        await addOpenAiKey(OPENAI_API_KEY);
+                    }
+                    resolve();
+                },
+                (_, err) => {
+                    reject(err);
+                }
+            );
+        });
+    });
+    return Promise.all([humanPromise, OpenAiPromise]);
 }
 
+//human table configs
 export function addHuman(human) {
     const promise = new Promise((resolve, reject) => {
         database.transaction((tx) => {
@@ -127,11 +153,89 @@ export function deleteHuman(id, imageUri) {
     return promise;
 }
 
-export function deleteTable() {
+export function deleteHumanTable() {
     const promise = new Promise((resolve, reject) => {
         database.transaction((tx) => {
             tx.executeSql(
                 "DROP TABLE IF EXISTS humans",
+                [],
+                (_, result) => {
+                    resolve(result);
+                },
+                (_, err) => {
+                    reject(err);
+                }
+            );
+        });
+    });
+    return promise;
+}
+
+//openai table configs
+export function deleteOpenAiKey() {
+    const promise = new Promise((resolve, reject) => {
+        database.transaction((tx) => {
+            tx.executeSql(
+                "TRUNCATE TABLE openai",
+                [],
+                (_, result) => {
+                    resolve();
+                },
+                (_, error) => {
+                    reject(error);
+                }
+            );
+        });
+    });
+    return promise;
+}
+
+export function addOpenAiKey(key) {
+    const promise = new Promise((resolve, reject) => {
+        database.transaction((tx) => {
+            tx.executeSql(
+                "INSERT INTO openai (apiKey) VALUES (?)",
+                [key],
+                (_, result) => {
+                    resolve();
+                },
+                (_, error) => {
+                    reject(error);
+                }
+            );
+        });
+    });
+    return promise;
+}
+
+export async function updateOpenAiKey(key) {
+    await deleteOpenAiKey();
+    return addOpenAiKey(key);
+}
+
+export function retrieveOpenAiKey() {
+    const promise = new Promise((resolve, reject) => {
+        database.transaction((tx) => {
+            tx.executeSql(
+                "SELECT * FROM openai LIMIT ?",
+                [1],
+                (_, result) => {
+                    resolve(result.rows._array[0]);
+                },
+                (_, error) => {
+                    reject(error);
+                }
+            );
+        });
+    });
+    return promise;
+}
+
+export function deleteOpenAiTable() {
+    const promise = new Promise((resolve, reject) => {
+        database.transaction((tx) => {
+            tx.executeSql(
+                "DROP TABLE IF EXISTS openai",
                 [],
                 (_, result) => {
                     resolve(result);
