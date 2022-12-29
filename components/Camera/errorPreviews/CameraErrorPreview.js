@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     container: {
         zIndex: 1,
         position: "absolute",
-        padding: 10,
+        padding: 20,
         flex: 1,
         width: "100%",
         height: "100%",

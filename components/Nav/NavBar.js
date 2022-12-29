@@ -1,4 +1,4 @@
-import { View, Text, Dimensions, useWindowDimensions, StyleSheet } from "react-native";
+import { View, Text, Dimensions, useWindowDimensions, StyleSheet, Keyboard } from "react-native";
 import { Color } from "../../constants/styles";
 import { useNavigation } from "@react-navigation/native";
 //components
@@ -14,6 +14,7 @@ function NavBar({ name = "", aboutButton = true, homeButton = false }) {
                 style={styles.arrow}
                 color={Color.white}
                 onPress={() => {
+                    Keyboard.dismiss();
                     navigation.goBack();
                 }}
             />

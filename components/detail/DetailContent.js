@@ -81,6 +81,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         backgroundColor: Color.blue300,
         overflow: "hidden",
+        marginBottom: 20,
     },
     infoContainer: {
         padding: 20,

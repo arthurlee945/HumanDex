@@ -28,8 +28,9 @@ function AboutContent() {
                 colors={[Color.blue300, Color.blue250, Color.blue300]}
             >
                 <Text style={defaultFont.subTexts}>I am a web developer based in Chicago.</Text>
-                <Text style={[defaultFont.subTexts]}>This project was inspired by Pokemon!</Text>
-                <Text style={[defaultFont.subTexts]}>(If you didn't get it already)</Text>
+                <Text style={[defaultFont.subTexts]}>
+                    This project was inspired by Pokemon!{"\n"}( I'm sure you guessed it! )
+                </Text>
                 <Text style={[defaultFont.subTexts]}>
                     Take a look at my other projects or learn more about me by clicking links below!!
                 </Text>
@@ -53,6 +54,7 @@ const styles = StyleSheet.create({
     },
     infoContainer: {
         padding: 15,
+        marginBottom: 20,
         borderRadius: 5,
         backgroundColor: Color.blue300,
         overflow: "hidden",

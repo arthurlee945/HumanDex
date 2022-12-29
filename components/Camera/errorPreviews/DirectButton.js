@@ -1,17 +1,64 @@
-import { Pressable, Text, StyleSheet, useWindowDimensions, Animated } from "react-native";
-import { Color } from "../../../constants/styles";
+import { useRef } from "react";
+import { Pressable, View, Text, StyleSheet, useWindowDimensions, Animated } from "react-native";
+import { Color, botShade } from "../../../constants/styles";
 
 function DirectButton({ children, onPress, color }) {
-    const AnimatablePressable = Animated.createAnimatedComponent(Pressable);
+    const buttonRef = useRef({ pos: new Animated.Value(0), shade: new Animated.Value(3) }).current;
+
     const { fontScale } = useWindowDimensions();
 
     const handleButtonClick = () => {
-        onPress();
+        const baseConfig = {
+            duration: 50,
+            useNativeDriver: true,
+        };
+        Animated.sequence([
+            Animated.parallel([
+                Animated.timing(buttonRef.shade, {
+                    toValue: 0,
+                    ...baseConfig,
+                }),
+                Animated.timing(buttonRef.pos, {
+                    toValue: 3,
+                    ...baseConfig,
+                }),
+            ]),
+            Animated.parallel([
+                Animated.timing(buttonRef.shade, {
+                    toValue: 3,
+                    ...baseConfig,
+                }),
+                Animated.timing(buttonRef.pos, {
+                    toValue: 0,
+                    ...baseConfig,
+                }),
+            ]),
+        ]).start(({ finished }) => finished && onPress());
     };
     return (
-        <AnimatablePressable style={[styles.button, { backgroundColor: color }]} onPress={onPress}>
-            <Text style={[{ fontSize: fontScale * 16, color: Color.white, fontWeight: "bold" }]}>{children}</Text>
-        </AnimatablePressable>
+        <Pressable onPress={handleButtonClick}>
+            <Animated.View
+                style={[
+                    styles.button,
+                    { backgroundColor: color },
+                    botShade,
+                    {
+                        elevation: buttonRef.shade,
+                        shadowOffset: {
+                            width: 0,
+                            height: buttonRef.shade,
+                        },
+                        transform: [
+                            {
+                                translateY: buttonRef.pos,
+                            },
+                        ],
+                    },
+                ]}
+            >
+                <Text style={[{ fontSize: fontScale * 16, color: Color.white, fontWeight: "bold" }]}>{children}</Text>
+            </Animated.View>
+        </Pressable>
     );
 }
 

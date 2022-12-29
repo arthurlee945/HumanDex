@@ -176,7 +176,7 @@ export function deleteOpenAiKey() {
     const promise = new Promise((resolve, reject) => {
         database.transaction((tx) => {
             tx.executeSql(
-                "TRUNCATE TABLE openai",
+                "DELETE FROM openai",
                 [],
                 (_, result) => {
                     resolve();

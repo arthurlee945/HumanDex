@@ -7,11 +7,11 @@ import { retrieveOpenAiKey } from "./database";
 const { DF_API_URL, OPENAI_URL } = Constants.expoConfig.extra;
 
 export const getDescription = async (age, race, gender, emotion) => {
-    console.log("Open AI Generating Prompt");
+    // console.log("Open AI Generating Prompt");
     const retrievedKey = await retrieveOpenAiKey();
     const propmt = `Write a funny and goofy two to three sentences description of a person who is ${age} years old, ${race}, ${gender}, and currently ${emotion}.`;
     const header = {
-        Authorization: `Bsearer ${retrievedKey.apiKey}`,
+        Authorization: `Bearer ${retrievedKey.apiKey}`,
     };
     const data = {
         model: "text-davinci-003",
@@ -28,7 +28,7 @@ export const getDescription = async (age, race, gender, emotion) => {
 };
 
 export const processImage = (dataUrl) => {
-    console.log("Start processing Image");
+    // console.log("Start processing Image");
     const data = {
         img: [dataUrl],
     };
@@ -36,7 +36,7 @@ export const processImage = (dataUrl) => {
 };
 
 export const resizeImage = async (imageUri) => {
-    console.log("Resizing Image");
+    // console.log("Resizing Image");
     const actions = [
         {
             resize: {
