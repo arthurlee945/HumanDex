@@ -11,6 +11,7 @@ import DexScreen from "./screens/DexScreen";
 import CollectionScreen from "./screens/CollectionScreen";
 import AboutScreen from "./screens/AboutScreen";
 import HumanDetailScreen from "./screens/HumanDetailScreen";
+import SetAuthScreen from "./screens/SetAuthScreen";
 //Components and Utils
 import { Color } from "./constants/styles";
 
@@ -55,6 +56,7 @@ export default function App() {
                     <Stack.Screen name="Collection" component={CollectionScreen} />
                     <Stack.Screen name="HumanDetail" component={HumanDetailScreen} />
                     <Stack.Screen name="About" component={AboutScreen} />
+                    <Stack.Screen name="SetAuth" component={SetAuthScreen} />
                 </Stack.Navigator>
             </NavigationContainer>
         </>

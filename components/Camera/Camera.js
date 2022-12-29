@@ -135,6 +135,7 @@ function Camera() {
                             preview={preview}
                             loading={loading}
                             serverError={serverError}
+                            setServerError={setServerError}
                             isFocused={isFocused}
                         />
                         <View style={styles.botIndicatorCont}>

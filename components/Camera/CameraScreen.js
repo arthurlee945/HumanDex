@@ -5,8 +5,8 @@ import { Color } from "../../constants/styles";
 import CameraPreview from "./CameraPreview";
 import Button from "../Button";
 import LoadingIndicator from "../LoadingIndicator";
-import CameraErrorPreview from "./CameraErrorPreview";
-function CameraScreen({ camera, preview, loading, serverError, isFocused }) {
+import CameraErrorPreview from "./errorPreviews/CameraErrorPreview";
+function CameraScreen({ camera, preview, loading, serverError, setServerError, isFocused }) {
     const { fontScale } = useWindowDimensions();
     const [permission, requestPermission] = Camera.useCameraPermissions();
 
@@ -28,7 +28,9 @@ function CameraScreen({ camera, preview, loading, serverError, isFocused }) {
         <View style={styles.csContainer}>
             {isFocused && <Camera ref={camera} style={styles.camera} type={CameraType.back} ratio="1:1"></Camera>}
             {preview && <CameraPreview photo={preview} />}
-            {(serverError.auth || serverError.server) && <CameraErrorPreview serverError={serverError} />}
+            {(serverError.auth || serverError.server) && (
+                <CameraErrorPreview setServerError={setServerError} serverError={serverError} />
+            )}
             {loading && <LoadingIndicator />}
         </View>
     );

@@ -1,11 +1,14 @@
 import { View, Text, useWindowDimensions, StyleSheet } from "react-native";
-import { Color } from "../../constants/styles";
-function CameraErrorPreview({ serverError }) {
+import { Color } from "../../../constants/styles";
+import AuthError from "./AuthError";
+import ServerError from "./ServerError";
+function CameraErrorPreview({ serverError, setServerError }) {
     const { fontScale } = useWindowDimensions();
     const defaultFontSizing = { fontSize: fontScale * 16, color: Color.white };
     return (
         <View style={styles.container}>
-            <Text style={defaultFontSizing}>Placeholder</Text>
+            {serverError.server && <ServerError defaultFont={defaultFontSizing} />}
+            {serverError.auth && <AuthError defaultFont={defaultFontSizing} />}
         </View>
     );
 }
@@ -16,7 +19,7 @@ const styles = StyleSheet.create({
     container: {
         zIndex: 1,
         position: "absolute",
-
+        padding: 10,
         flex: 1,
         width: "100%",
         height: "100%",
