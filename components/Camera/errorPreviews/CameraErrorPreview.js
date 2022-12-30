@@ -4,7 +4,7 @@ import AuthError from "./AuthError";
 import ServerError from "./ServerError";
 function CameraErrorPreview({ serverError, setServerError }) {
     const { fontScale } = useWindowDimensions();
-    const defaultFontSizing = { fontSize: fontScale * 16, color: Color.white };
+    const defaultFontSizing = { fontSize: fontScale * 18, color: Color.white };
     return (
         <View style={styles.container}>
             {serverError.server && <ServerError defaultFont={defaultFontSizing} />}

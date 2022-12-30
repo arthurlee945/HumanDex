@@ -6,7 +6,8 @@ import CameraPreview from "./CameraPreview";
 import Button from "../Button";
 import LoadingIndicator from "../LoadingIndicator";
 import CameraErrorPreview from "./errorPreviews/CameraErrorPreview";
-function CameraScreen({ camera, preview, loading, serverError, setServerError, isFocused }) {
+import WarningScreen from "./errorPreviews/WarningScreen";
+function CameraScreen({ camera, preview, loading, serverError, setServerError, warning, setWarning, isFocused }) {
     const { fontScale } = useWindowDimensions();
     const [permission, requestPermission] = Camera.useCameraPermissions();
 
@@ -31,6 +32,7 @@ function CameraScreen({ camera, preview, loading, serverError, setServerError, i
             {(serverError.auth || serverError.server) && (
                 <CameraErrorPreview setServerError={setServerError} serverError={serverError} />
             )}
+            {warning && <WarningScreen warning={warning} setWarning={setWarning} />}
             {loading && <LoadingIndicator />}
         </View>
     );

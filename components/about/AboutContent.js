@@ -59,10 +59,6 @@ const styles = StyleSheet.create({
         backgroundColor: Color.blue300,
         overflow: "hidden",
     },
-    underlineCont: {
-        width: "100%",
-        alignItems: "center",
-    },
     underline: {
         borderBottomWidth: 2,
         borderColor: Color.gray,

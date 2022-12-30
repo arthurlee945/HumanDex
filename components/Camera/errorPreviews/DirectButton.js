@@ -56,7 +56,7 @@ function DirectButton({ children, onPress, color }) {
                     },
                 ]}
             >
-                <Text style={[{ fontSize: fontScale * 16, color: Color.white, fontWeight: "bold" }]}>{children}</Text>
+                <Text style={[{ fontSize: fontScale * 18, color: Color.white, fontWeight: "bold" }]}>{children}</Text>
             </Animated.View>
         </Pressable>
     );
@@ -69,6 +69,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
         paddingVertical: 5,
         borderRadius: 10,
-        marginHorizontal: 15,
+        marginHorizontal: 20,
     },
 });

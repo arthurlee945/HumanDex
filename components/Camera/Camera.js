@@ -20,6 +20,7 @@ function Camera() {
     const [description, setDescription] = useState("");
     const [twIntervalActive, setTwIntervalActive] = useState();
     const [speechStarted, setSpeechStarted] = useState(false);
+    const [warning, setWarning] = useState();
     const [serverError, setServerError] = useState({
         server: false,
         auth: false,
@@ -47,7 +48,7 @@ function Camera() {
             try {
                 // const processedImage = await processImage(dataUri);
                 // const { age, dominant_race, dominant_emotion, gender } = processedImage.data.instance_1;
-                const { age, dominant_race, dominant_emotion, gender } = sampleData;
+                // const { age, dominant_race, dominant_emotion, gender } = sampleData;
                 const descriptionRes = await getDescription(age, dominant_race, gender, dominant_emotion);
                 const description = descriptionRes.data.choices[0].text.replace(/^[\n]*/, "");
                 //sample
@@ -65,17 +66,23 @@ function Camera() {
                 await addHuman(newHuman);
                 descriptionEffectHandler(description);
             } catch (err) {
+                const status = err.response.status;
                 setServerError((currStatus) => ({
                     ...currStatus,
-                    server: err.response.status === 404 ? true : false,
-                    auth: err.response.status === 401 ? true : false,
+                    server: status === 404 ? true : false,
+                    auth: status === 401 ? true : false,
                 }));
+                if (status === 500) {
+                    setWarning("Sorry!!!\nI couldn't analyze the data :<");
+                    resetCamera();
+                }
             }
             setLoading(false);
         } else {
             resetCamera();
         }
     };
+
     useEffect(() => {
         if (!isFocused) {
             resetCamera();
@@ -135,6 +142,8 @@ function Camera() {
                             preview={preview}
                             loading={loading}
                             serverError={serverError}
+                            warning={warning}
+                            setWarning={setWarning}
                             setServerError={setServerError}
                             isFocused={isFocused}
                         />

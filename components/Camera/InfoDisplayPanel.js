@@ -11,7 +11,7 @@ function InfoDisplayPanel({ children }) {
                     padding: 5,
                 }}
             >
-                <Text style={[styles.text, { fontSize: 16 * fontScale }]}>{children}</Text>
+                <Text style={[styles.text, { fontSize: 17 * fontScale }]}>{children}</Text>
             </ScrollView>
         </View>
     );
