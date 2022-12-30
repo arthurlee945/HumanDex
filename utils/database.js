@@ -249,34 +249,34 @@ export function deleteOpenAiTable() {
     return promise;
 }
 
-export const sampleData = {
-    age: 29,
-    dominant_emotion: "happy",
-    dominant_race: "black",
-    emotion: {
-        angry: 0.0006518918003669004,
-        disgust: 2.5957949359763265e-8,
-        fear: 0.10484012223823401,
-        happy: 87.33261974661114,
-        neutral: 12.25683393992973,
-        sad: 0.017130901100807505,
-        surprise: 0.2879258134826048,
-    },
-    gender: "Woman",
-    race: {
-        asian: 18.908613920211792,
-        black: 45.77074646949768,
-        indian: 14.630670845508575,
-        "latino hispanic": 17.24979132413864,
-        "middle eastern": 1.4890329912304878,
-        white: 1.9511451944708824,
-    },
-    region: {
-        h: 654,
-        w: 654,
-        x: 160,
-        y: 213,
-    },
-    description:
-        "This 26 year old, Asian female is so happy she could burst into a spontaneous dance at any given moment! She radiates positivity and joy, always looking for the next opportunity to squeeze in a good laugh.",
-};
+// export const sampleData = {
+//     age: 29,
+//     dominant_emotion: "happy",
+//     dominant_race: "black",
+//     emotion: {
+//         angry: 0.0006518918003669004,
+//         disgust: 2.5957949359763265e-8,
+//         fear: 0.10484012223823401,
+//         happy: 87.33261974661114,
+//         neutral: 12.25683393992973,
+//         sad: 0.017130901100807505,
+//         surprise: 0.2879258134826048,
+//     },
+//     gender: "Woman",
+//     race: {
+//         asian: 18.908613920211792,
+//         black: 45.77074646949768,
+//         indian: 14.630670845508575,
+//         "latino hispanic": 17.24979132413864,
+//         "middle eastern": 1.4890329912304878,
+//         white: 1.9511451944708824,
+//     },
+//     region: {
+//         h: 654,
+//         w: 654,
+//         x: 160,
+//         y: 213,
+//     },
+//     description:
+//         "This 26 year old, Asian female is so happy she could burst into a spontaneous dance at any given moment! She radiates positivity and joy, always looking for the next opportunity to squeeze in a good laugh.",
+// };

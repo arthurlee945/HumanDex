@@ -11,7 +11,7 @@ export const getDescription = async (age, race, gender, emotion) => {
     const retrievedKey = await retrieveOpenAiKey();
     const propmt = `Write a funny and goofy two to three sentences description of a person who is ${age} years old, ${race}, ${gender}, and currently ${emotion}.`;
     const header = {
-        Authorization: `Beasrer ${retrievedKey.apiKey}`,
+        Authorization: `Bearer ${retrievedKey.apiKey}`,
     };
     const data = {
         model: "text-davinci-003",

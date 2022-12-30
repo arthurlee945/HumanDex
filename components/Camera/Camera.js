@@ -2,8 +2,8 @@ import { View, Image, StyleSheet } from "react-native";
 import { useEffect, useRef, useState } from "react";
 import * as Speech from "expo-speech";
 import { useIsFocused } from "@react-navigation/native";
-import { addHuman, sampleData } from "../../utils/database";
-import { getDescription, useCallback, processImage, resizeImage } from "../../utils/processing";
+import { addHuman } from "../../utils/database";
+import { getDescription, processImage, resizeImage } from "../../utils/processing";
 import { Color, outline, botShade } from "../../constants/styles";
 //components
 import InfoDisplayPanel from "./InfoDisplayPanel";
@@ -44,17 +44,15 @@ function Camera() {
             setLoading(true);
             const photo = await camera.current.takePictureAsync();
             camera.current.pausePreview();
+
             const resizedImage = await resizeImage(photo.uri);
             const dataUri = `data:image/jpg;base64,${resizedImage.base64}`;
             setPreview(resizedImage.uri);
             try {
-                // const processedImage = await processImage(dataUri);
-                // const { age, dominant_race, dominant_emotion, gender } = processedImage.data.instance_1;
-                const { age, dominant_race, dominant_emotion, gender } = sampleData;
+                const processedImage = await processImage(dataUri);
+                const { age, dominant_race, dominant_emotion, gender } = processedImage.data.instance_1;
                 const descriptionRes = await getDescription(age, dominant_race, gender, dominant_emotion);
                 const description = descriptionRes.data.choices[0].text.replace(/^[\n]*/, "");
-                //sample
-                // const { age, dominant_race, dominant_emotion, gender, description } = sampleData;
 
                 const newHuman = {
                     age: age,
@@ -94,7 +92,6 @@ function Camera() {
     const descriptionEffectHandler = (description) => {
         //speech init
         const speechOptions = {
-            pitch: 0.25,
             onStart: () => {
                 setSpeechStarted(true);
             },
