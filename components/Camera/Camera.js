@@ -10,6 +10,7 @@ import InfoDisplayPanel from "./InfoDisplayPanel";
 import CameraScreen from "./CameraScreen";
 import CameraButton from "./CameraButton";
 import DexIndicator from "../DexIndicator";
+import DecorativeButton from "./DecorativeButton";
 
 function Camera() {
     // states and ref
@@ -34,6 +35,7 @@ function Camera() {
         setTwIntervalActive(undefined);
         setPreview(undefined);
         setDescription("");
+        setWarning(undefined);
         setServerError((currStatus) => ({ ...currStatus, server: false, auth: false }));
     };
     const handleTakePicture = async () => {
@@ -48,7 +50,7 @@ function Camera() {
             try {
                 // const processedImage = await processImage(dataUri);
                 // const { age, dominant_race, dominant_emotion, gender } = processedImage.data.instance_1;
-                // const { age, dominant_race, dominant_emotion, gender } = sampleData;
+                const { age, dominant_race, dominant_emotion, gender } = sampleData;
                 const descriptionRes = await getDescription(age, dominant_race, gender, dominant_emotion);
                 const description = descriptionRes.data.choices[0].text.replace(/^[\n]*/, "");
                 //sample
@@ -156,10 +158,7 @@ function Camera() {
                                 />
                             </View>
                             <View style={styles.lines}>
-                                <View style={styles.line}></View>
-                                <View style={styles.line}></View>
-                                <View style={styles.line}></View>
-                                <View style={styles.line}></View>
+                                <DecorativeButton />
                             </View>
                         </View>
                     </View>
@@ -233,12 +232,7 @@ const styles = StyleSheet.create({
     },
     lines: {
         width: "10%",
-    },
-    line: {
-        width: "100%",
-        height: 2,
-        backgroundColor: Color.black,
-        margin: 2,
+        aspectRatio: 1 / 0.75,
     },
 
     //control styles
