@@ -8,7 +8,9 @@ function CollectionList({ humans, onSelect, onDelete }) {
     if (!humans || humans.length === 0) {
         return (
             <View style={[styles.defaultSizing, styles.noItemContainer]}>
-                <Text style={[styles.noItemText, { fontSize: fontScale * 16 }]}>Gotta Catch 'Em All!</Text>
+                <Text style={[styles.noItemText, { fontSize: fontScale * 17, fontWeight: "bold" }]}>
+                    Gotta Catch 'Em All!
+                </Text>
             </View>
         );
     }

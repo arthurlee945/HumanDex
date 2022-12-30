@@ -53,7 +53,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     infoContainer: {
-        padding: 15,
+        paddingHorizontal: 15,
+        paddingVertical: 20,
         marginBottom: 20,
         borderRadius: 5,
         backgroundColor: Color.blue300,
