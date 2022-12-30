@@ -6,7 +6,6 @@ function DecorativeButton() {
     const AnimatablePressable = Animated.createAnimatedComponent(Pressable);
     const lines = useRef({ ang: new Animated.Value(0), pos: new Animated.Value(1) }).current;
     const handleDecoBtnClick = () => {
-        console.log(0.25 * stage);
         const defaultConfig = {
             useNativeDriver: true,
             duration: 150,
