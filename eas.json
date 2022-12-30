@@ -13,9 +13,9 @@
       },
       "distribution": "internal",
       "env":{
-        "DF_API_URL": "http://arthurlee945.pythonanywhere.com",
-        "OPENAI_URL": "https://api.openai.com/v1/completions",
-        "OPENAI_API_KEY": "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"
+        "DF_API_URL": "ADD YOUR DEEPFACE API",
+        "OPENAI_URL": "https://api.openai.com/v1/completions", //Open AI Completions API Url
+        "OPENAI_API_KEY": "ADD YOUR KEY HERE"
       }
     },
     "production": {
