@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { Pressable, View, Text, StyleSheet, useWindowDimensions, Animated } from "react-native";
+import { Pressable, Text, StyleSheet, useWindowDimensions, Animated } from "react-native";
 import { Color, botShade } from "../../../constants/styles";
 
 function DirectButton({ children, onPress, color }) {

@@ -6,8 +6,8 @@ import Human from "../models/human";
 
 const database = SQLite.openDatabase("humans.db");
 
-//initial API KEY Probably won't work when this is live
 const { OPENAI_API_KEY } = Constants.expoConfig.extra;
+
 //initializer
 export function initTables() {
     const humanPromise = new Promise((resolve, reject) => {

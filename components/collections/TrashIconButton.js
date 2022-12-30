@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { Pressable, Animated, StyleSheet } from "react-native";
+import { Pressable, Animated } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 function TrashIconButton({ onPress, color, bgColor, size }) {
     const binRef = useRef(new Animated.Value(0)).current;

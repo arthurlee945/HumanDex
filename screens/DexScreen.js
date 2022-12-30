@@ -1,4 +1,4 @@
-import { StyleSheet, View, Button } from "react-native";
+import { StyleSheet, View } from "react-native";
 //Components and Utils
 import ScreenContentView from "../components/ScreenContentView";
 import Cover from "../components/introCover/Cover";

@@ -1,4 +1,4 @@
-import { View, Animated, Pressable, Dimensions, useWindowDimensions, Easing, Image, StyleSheet } from "react-native";
+import { View, Animated, Pressable, Dimensions, useWindowDimensions, Image, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Color } from "../../constants/styles";
 import { useRef } from "react";

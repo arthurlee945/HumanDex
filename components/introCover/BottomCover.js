@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Animated, Dimensions, StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Color, outline, topShade } from "../../constants/styles";

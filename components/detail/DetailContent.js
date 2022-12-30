@@ -1,4 +1,4 @@
-import { ScrollView, View, Image, Text, StyleSheet, Dimensions, useWindowDimensions } from "react-native";
+import { ScrollView, View, Image, Text, StyleSheet, useWindowDimensions } from "react-native";
 import { Color, botShade, outline } from "../../constants/styles";
 import { LinearGradient } from "expo-linear-gradient";
 //components

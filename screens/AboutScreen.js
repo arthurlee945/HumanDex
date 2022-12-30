@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 //components
 import ScreenContentView from "../components/ScreenContentView";
 import NavBar from "../components/Nav/NavBar";
