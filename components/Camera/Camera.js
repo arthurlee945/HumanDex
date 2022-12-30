@@ -35,7 +35,6 @@ function Camera() {
         setTwIntervalActive(undefined);
         setPreview(undefined);
         setDescription("");
-        setWarning(undefined);
         setServerError((currStatus) => ({ ...currStatus, server: false, auth: false }));
     };
     const handleTakePicture = async () => {
@@ -73,9 +72,11 @@ function Camera() {
                     auth: status === 401 ? true : false,
                 }));
                 if (status === 500) {
+                    console.log("hello?");
                     setWarning("Sorry!!!\nI couldn't analyze the data :<");
                     resetCamera();
                 }
+                console.log(err, status);
             }
             setLoading(false);
         } else {

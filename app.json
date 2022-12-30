@@ -1,33 +1,37 @@
 {
-    "expo": {
-        "name": "HumanDex",
-        "slug": "HumanDex",
-        "version": "1.0.0",
-        "orientation": "portrait",
-        "icon": "./assets/icon.png",
-        "userInterfaceStyle": "light",
-        "splash": {
-            "image": "./assets/splash.png",
-            "resizeMode": "contain",
-            "backgroundColor": "#DC092C"
-        },
-        "updates": {
-            "fallbackToCacheTimeout": 0
-        },
-        "assetBundlePatterns": ["**/*"],
-        "ios": {
-            "supportsTablet": true
-        },
-        "android": {
-            "adaptiveIcon": {
-                "foregroundImage": "./assets/adaptive-icon.png",
-                "backgroundColor": "#DC092C"
-            }
-        },
-        "extra": {
-            "DF_API_URL": "http://arthurlee945.pythonanywhere.com",
-            "OPENAI_URL": "https://api.openai.com/v1/completions",
-            "OPENAI_API_KEY": "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"
-        }
+  "expo": {
+    "name": "HumanDex",
+    "slug": "HumanDex",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "platforms": [
+      "android"
+    ],
+    "userInterfaceStyle": "light",
+    "backgroundColor": "#DC092C",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#DC092C"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "buildNumber": "1.0.0",
+      "supportsTablet": true
+    },
+    "android": {
+      "versionCode": 1,
+      "package":"digital.arthurlee.humandex",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#DC092C"
+      }
     }
+  }
 }
