@@ -15,6 +15,7 @@ Due to the fact that Open AI rotates API Key frequently, User will need to updat
 <img src="https://user-images.githubusercontent.com/83962300/210117534-86894773-bfb0-431a-b7f5-0863e6e91c29.jpg" style="width:250px; height:auto;"/> 
 
 
+
 ------ Dex Screen ------
 
 <div style="display:flex; column-gap:25px;">
@@ -22,6 +23,7 @@ Due to the fact that Open AI rotates API Key frequently, User will need to updat
 <img src="https://user-images.githubusercontent.com/83962300/210117647-ddc706b5-83ab-4842-9a81-01b04b1b6ddd.jpg" style="width:250px; height:auto;"/> 
 <div>
 
+  
 
 ------ Collection and Detail Screen ------
 
@@ -33,6 +35,7 @@ Due to the fact that Open AI rotates API Key frequently, User will need to updat
 <b><i>Sadly when you use the app most likely it won't get face analysis result for dogs.\n if you can get a result BIG THUMBS UP!</i></b>
 
 
+  
 ------ About Me Screen ------
 
 <img src="https://user-images.githubusercontent.com/83962300/210117887-40d39a3b-d80b-479b-8fb1-f0eb1a655d5f.jpg" style="width:250px; height:auto;"/> 
